@@ -7,7 +7,7 @@
   export let data;
 
   const { form, errors, delayed, enhance, message } = superForm(data.form);
-  console.log(delayed, message)
+  console.log($delayed, message)
 </script>
 
 <div
