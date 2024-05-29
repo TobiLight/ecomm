@@ -31,10 +31,12 @@ export async function mysqlConnection<T extends Record<string, unknown>>(
 
   const db = drizzle(connection, { schema });
 
+  
+
   if (automaticMigration) {
     // this will automatically run needed migrations on the database
     await migrate(db, {
-      migrationsFolder: './.migrations',
+      migrationsFolder: __dirname + '/migrations',
     });
   }
 
