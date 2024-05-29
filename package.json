@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "nx exec -- vite dev",
-    "preview": "nx exec -- vite preview",
+    "preview": "nx exec -- vite preview --mode production --outDir=.svelte-kit --config vite.config.ts",
     "build": "nx exec -- vite build",
     "prepare": "nx exec --  svelte-kit sync",
     "typecheck": "nx exec -- svelte-check --tsconfig ./tsconfig.json",
