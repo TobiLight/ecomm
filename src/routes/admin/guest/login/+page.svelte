@@ -3,18 +3,18 @@
   import AppInput from '$lib/components/AppInput.svelte';
   import ErrorAlert from '$lib/components/ErrorAlert.svelte';
   import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
-  import {enhance as enh} from "$app/forms"
+  import { enhance as enh } from '$app/forms';
 
   export let data;
 
   const { form, errors, delayed, enhance, message } = superForm(data.form);
   let isLoading = false;
 
-  $: isLoading = $delayed
+  $: isLoading = $delayed;
 </script>
 
 <div
-  class={`${$message ? "mb-24" : ""} mx-auto pt-32 md:mt-0 flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0`}
+  class={`${$message ? 'mb-24' : ''} mx-auto pt-32 md:mt-0 flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0`}
 >
   <div
     class="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0"
@@ -32,19 +32,18 @@
         on:submit={(e) => {
           isLoading = true;
         }}
-        use:enh={({action, cancel}) => {
+        use:enh={({ action, cancel }) => {
           // do stuff here
 
-          return async ({result, update}) => {
-            console.log(result)
+          return async ({ result, update }) => {
+            console.log(result);
 
             // if (result.data)
-          }
+          };
         }}
         method="post"
         class="space-y-4 md:space-y-6"
       >
-      
         <div>
           <AppInput
             input={{

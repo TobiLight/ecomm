@@ -10,9 +10,9 @@ function isAdminExists() {
 }
 
 export async function load() {
-  if (await isAdminExists()) {
-    throw redirect(303, '/admin/guest/login');
-  }
+  // if (await isAdminExists()) {
+  //   throw redirect(303, '/admin/guest/login');
+  // }
 
   const form = await superValidate(upsertAdminSchema);
   return { form };
