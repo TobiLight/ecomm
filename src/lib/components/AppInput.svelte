@@ -44,6 +44,7 @@
 
   export let input: InputItem;
   export let value: string | number = '';
+
   if (input.value) {
     value = input.value;
   }
@@ -64,6 +65,7 @@
   function typeAction(node: HTMLInputElement) {
     node.type = type;
   }
+
 </script>
 
 {#if showLabel}

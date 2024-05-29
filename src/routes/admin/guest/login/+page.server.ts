@@ -36,6 +36,6 @@ export const actions = {
       }
     }
 
-    return message(form, 'The email or password does not match');
+    return message(form, 'The email or password does not match', {status: 400});
   },
 };

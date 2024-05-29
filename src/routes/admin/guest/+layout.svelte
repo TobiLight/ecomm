@@ -6,10 +6,10 @@
 
 <div>
   <Navbar />
-  <section class="bg-gray-50 dark:bg-gray-900">
+  <section class="bg-gray-50 dark:bg-gray-900 min-h-screen">
     <slot />
   </section>
-  <div class="fixed bottom-0 w-full">
+  <div class="fixedd bottom-0 w-full">
     <Footer />
   </div>
 </div>

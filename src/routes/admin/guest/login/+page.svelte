@@ -3,15 +3,18 @@
   import AppInput from '$lib/components/AppInput.svelte';
   import ErrorAlert from '$lib/components/ErrorAlert.svelte';
   import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
+  import {enhance as enh} from "$app/forms"
 
   export let data;
 
   const { form, errors, delayed, enhance, message } = superForm(data.form);
-  console.log($delayed, message)
+  let isLoading = false;
+
+  $: isLoading = $delayed
 </script>
 
 <div
-  class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0"
+  class={`${$message ? "mb-24" : ""} mx-auto pt-32 md:mt-0 flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0`}
 >
   <div
     class="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0"
@@ -25,7 +28,22 @@
       {#if $message}
         <ErrorAlert>{$message}</ErrorAlert>
       {/if}
-      <form use:enhance method="post" class="space-y-4 md:space-y-6">
+      <form
+        on:submit={(e) => {
+          isLoading = true;
+        }}
+        use:enh={({action, cancel}) => {
+          // do stuff here
+
+          return async ({result, update}) => {
+            console.log(result)
+
+            // if (result.data)
+          }
+        }}
+        method="post"
+        class="space-y-4 md:space-y-6"
+      >
         <div>
           <AppInput
             input={{
@@ -49,9 +67,9 @@
             }}
           />
         </div>
-        <SubmitButton submitting={$delayed} wFull={true}>Sign in</SubmitButton>
+        <SubmitButton submitting={isLoading} wFull={true}>Sign in</SubmitButton>
       </form>
-      <div class="text-white flex justify-between items-center">
+      <div class="dark:text-white flex justify-between items-center">
         <a
           class="hover:text-primary-700 inline-flex items-center rounded-lg py-2.5 text-center text-sm font-medium"
           href="/admin/guest/register">Create account</a
