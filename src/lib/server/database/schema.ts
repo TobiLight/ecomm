@@ -30,20 +30,20 @@ export const admins = mysqlTable(
   }),
 );
 
-export const users = mysqlTable(
-  'users',
-  {
-    id: serial('id').primaryKey(),
-    name: varchar('name', { length: 256 }).notNull(),
-    email: varchar('email', { length: 256 }).notNull(),
-    createdAt: timestamp('created_at').notNull().defaultNow(),
-    updatedAt: timestamp('updated_at').notNull().defaultNow(),
-    role: mysqlEnum('role', ['user', 'admin'])
-  },
-  (table) => ({
-    emailIdx: uniqueIndex('email_idx').on(table.email),
-  }),
-);
+// export const users = mysqlTable(
+//   'users',
+//   {
+//     id: serial('id').primaryKey(),
+//     name: varchar('name', { length: 256 }).notNull(),
+//     email: varchar('email', { length: 256 }).notNull(),
+//     createdAt: timestamp('created_at').notNull().defaultNow(),
+//     updatedAt: timestamp('updated_at').notNull().defaultNow(),
+//     role: mysqlEnum('role', ['user', 'admin'])
+//   },
+//   (table) => ({
+//     emailIdx: uniqueIndex('email_idx').on(table.email),
+//   }),
+// );
 
 export const adminPasswords = mysqlTable('admin_passwords', {
   id: serial('id').primaryKey(),
