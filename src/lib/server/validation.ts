@@ -11,6 +11,7 @@ async function uniqueAdminEmail(email: string, id?: number) {
   const exists = await repository.emailExists(email, id);
   return !exists;
 }
+
 export const upsertAdminSchema = upsertAdmin
   .refine(({ id, password }) => Boolean(password || id), {
     message: 'String must contain at least 1 character(s)',
