@@ -7,6 +7,7 @@
   export let data;
 
   const { form, errors, delayed, enhance, message } = superForm(data.form);
+  console.log(delayed, message)
 </script>
 
 <div
@@ -50,6 +51,17 @@
         </div>
         <SubmitButton submitting={$delayed} wFull={true}>Sign in</SubmitButton>
       </form>
+      <div class="text-white flex justify-between items-center">
+        <a
+          class="hover:text-primary-700 inline-flex items-center rounded-lg py-2.5 text-center text-sm font-medium"
+          href="/admin/guest/register">Create account</a
+        >
+
+        <a
+          class="hover:text-primary-700 inline-flex items-center rounded-lg py-2.5 text-center text-sm font-medium"
+          href="/admin/guest/reset-password">Forgot Password?</a
+        >
+      </div>
     </div>
   </div>
 </div>

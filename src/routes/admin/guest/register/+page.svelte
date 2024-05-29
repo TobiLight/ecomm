@@ -9,6 +9,7 @@
   const { form, errors, delayed, enhance } = superForm(data.form, {
     validators: upsertAdminSchema,
   });
+
 </script>
 
 <div
@@ -60,6 +61,12 @@
         </div>
         <SubmitButton submitting={$delayed} wFull={true}>Sign up</SubmitButton>
       </form>
+      <div class="text-white flex justify-end">
+        <a
+          class="hover:text-primary-700 inline-flex items-center rounded-lg py-2.5 text-center text-sm font-medium"
+          href="/admin/guest/login">Sign in</a
+        >
+      </div>
     </div>
   </div>
 </div>

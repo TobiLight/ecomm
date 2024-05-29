@@ -1,5 +1,5 @@
 {
-  "name": "sveltekit-ecommerce",
+  "name": "kvk-store",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "nx exec -- vite dev",
-    "preview": "nx exec -- vite preview --mode production --outDir=.svelte-kit --config vite.config.ts",
+    "preview": "nx exec -- vite preview",
     "build": "nx exec -- vite build",
     "prepare": "nx exec --  svelte-kit sync",
     "typecheck": "nx exec -- svelte-check --tsconfig ./tsconfig.json",
@@ -56,8 +56,8 @@
     "text-case": "^1.0.9",
     "tslib": "^2.6.1",
     "typescript": "^5.1.6",
-    "vite": "^4.4.8",
-    "vite-imagetools": "^5.0.7",
+    "vite": "^4.5.3",
+    "vite-imagetools": "^5.1.2",
     "zod": "^3.21.4"
   },
   "nx": {
@@ -83,14 +83,7 @@
     }
   },
   "dependencies": {
-    "@sveltejs/adapter-vercel": "^5.3.0",
-    "aws-sdk": "^2.1629.0",
     "cardinal": "^2.1.1",
-    "encoding": "^0.1.13",
-    "mock-aws-s3": "^4.0.2",
-    "nock": "^13.5.4",
-    "node-gyp": "^10.1.0",
-    "npm": "^10.8.0",
     "pg": "^8.11.5"
   }
 }
