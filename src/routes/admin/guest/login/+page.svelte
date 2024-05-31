@@ -3,14 +3,13 @@
   import AppInput from '$lib/components/AppInput.svelte';
   import ErrorAlert from '$lib/components/ErrorAlert.svelte';
   import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
-  import { enhance as enh } from '$app/forms';
+  import { enhance as enh, applyAction } from '$app/forms';
 
   export let data;
 
   const { form, errors, delayed, enhance, message } = superForm(data.form);
   let isLoading = false;
 
-  $: isLoading = $delayed;
 </script>
 
 <div
@@ -36,9 +35,10 @@
           // do stuff here
 
           return async ({ result, update }) => {
-            console.log(result);
-
-            // if (result.data)
+            if (result) {
+              isLoading = false;
+              await applyAction(result);
+            }
           };
         }}
         method="post"

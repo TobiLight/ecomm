@@ -19,13 +19,28 @@ export async function upsertAdmin(input: z.infer<typeof upsertAdminSchema>) {
   const { id, password, ...values } = input;
 
   if (id) {
-    const result = await repository.update(values, id);
-    admin = throwIfNotFound(result);
-  } else {
-    admin = await repository.create(values);
+    try {
+      const result = await repository.update(values, id);
+      admin = throwIfNotFound(result);
+
+      return admin;
+    } catch (err: any) {
+      console.log('error has occured', err);
+    }
   }
 
-  await savePassword(admin.id, password);
+  const userExists = await repository.emailExists(values.email);
 
-  return admin;
+  if (userExists) throw Error('Record already exists');
+
+  try {
+    admin = await repository.create(values);
+    await savePassword(admin.id, password);
+
+    return admin;
+  } catch (err: any) {
+    const error = err as { message: string };
+
+    return error.message;
+  }
 }

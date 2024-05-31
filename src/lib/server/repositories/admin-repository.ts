@@ -11,11 +11,16 @@ export class AdminRepository extends BaseRepository<Admin> {
   }
 
   async create(values: Create) {
-    const result = await this.drizzle.insert(this.table).values(values);
+    try {
+      const result = await this.drizzle.insert(this.table).values(values);
+      return this.createResponse(result);
+    } catch (err: any) {
+      if (err.message.toLowerCase().includes('duplicate'))
+        throw Error('User account already exists!');
 
-    return this.createResponse(result);
+      throw Error(err.message);
+    }
   }
-
 
   async update(values: Create, id: number) {
     const result = await this.drizzle
