@@ -2,12 +2,12 @@ import { useRepository } from '$lib/server/repositories';
 import { formatListParams, formatListResponse } from '$lib/utils/list';
 import { throwIfNotFound } from '$lib/utils';
 
-const repository = useRepository('admin');
+const repository = useRepository('user');
 
 export async function load(event) {
   const params = formatListParams(event);
 
-  const items = await repository.getMany(params);
+  const items = await repository.getMany();
 
   const data = formatListResponse(items);
 
@@ -16,7 +16,7 @@ export async function load(event) {
 
 export const actions = {
   destroy: async (event) => {
-    const id = Number(event.params.id);
+    const id = event.params.id;
     if (id) {
       const result = await repository.destroy(id);
       return throwIfNotFound(result);

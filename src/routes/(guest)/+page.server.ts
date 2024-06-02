@@ -37,9 +37,9 @@ export async function load(event) {
   }
 
   return {
-    categories: getCategories(),
-    products: getProducts(),
-    cart: getCart(event),
+    categories: [],
+    products: [],
+    cart: [],
     currentUser: getCurrentUser()
   };
 }

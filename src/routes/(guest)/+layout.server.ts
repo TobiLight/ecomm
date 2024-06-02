@@ -10,7 +10,7 @@ const filterSchema = z.object({
 
 export async function load(event) {
   const getCurrentUser = async () => {
-    const repository = useRepository('admin');
+    const repository = useRepository('user');
     
     if (event.locals.admin) {
       const user = await repository.getLoginData(event.locals.admin.email);

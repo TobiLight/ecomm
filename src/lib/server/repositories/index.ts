@@ -1,24 +1,25 @@
-import { AdminRepository } from './admin-repository';
-import { AdminPasswordRepository } from './admin-password-repository';
-import { ProductRepository } from './product-repository';
-import { CategoryRepository } from './category-repository';
-import { OrderRepository } from './order-repository';
-import { ProductToOrderRepository } from './product-to-order-repository';
+// import { AdminRepository } from './admin-repository';
+// import { ProductRepository } from './product-repository';
+// import { CategoryRepository } from './category-repository';
+// import { OrderRepository } from './order-repository';
+// import { ProductToOrderRepository } from './product-to-order-repository';
+import {UserRepository} from "./user-repository"
+import prisma from '../database';
 
-const admin = new AdminRepository();
-const adminPassword = new AdminPasswordRepository();
-const product = new ProductRepository();
-const category = new CategoryRepository();
-const order = new OrderRepository();
-const productToOrder = new ProductToOrderRepository();
+// const admin = new AdminRepository();
+// const product = new ProductRepository();
+// const category = new CategoryRepository();
+// const order = new OrderRepository();
+// const productToOrder = new ProductToOrderRepository();
+const user = new UserRepository(prisma)
 
 const repositories = {
-  admin,
-  adminPassword,
-  product,
-  category,
-  order,
-  productToOrder,
+  // admin,
+  // product,
+  // category,
+  // order,
+  // productToOrder,
+  user
 };
 
 type Repositories = typeof repositories;

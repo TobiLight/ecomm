@@ -4,6 +4,11 @@
   import Sidebar from './components/Sidebar.svelte';
   import Footer from '$admin/components/Footer.svelte';
   import Navbar from '$admin/components/Navbar.svelte';
+  import { getFlash } from 'sveltekit-flash-message';
+  import { page } from '$app/stores';
+  
+
+  const flash = getFlash(page);
 
   const links: LinkItem[] = [
     {
@@ -33,11 +38,16 @@
       name: 'Logout',
       href: '/admin/auth/guest/logout',
       icon: 'mdi:logout',
-    }
+    },
   ];
 </script>
 
-<div>
+<div class="relative">
+  {#if $flash && $flash.type === 'success'}
+    <div class="absolute z-[5] bg-green-800 text-white mb-10 w-auto sm:max-w-md right-0 mt-20 rounded-md">
+      <p class="p-6">{$flash?.message}.</p>
+    </div>
+  {/if}
   <Navbar />
 
   <Sidebar {links} />

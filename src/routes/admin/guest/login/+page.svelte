@@ -4,17 +4,24 @@
   import ErrorAlert from '$lib/components/ErrorAlert.svelte';
   import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
   import { enhance as enh, applyAction } from '$app/forms';
+  import { page } from '$app/stores';
+  import { getFlash } from 'sveltekit-flash-message';
 
+  const flash = getFlash(page);
   export let data;
 
   const { form, errors, delayed, enhance, message } = superForm(data.form);
   let isLoading = false;
-
 </script>
 
 <div
   class={`${$message ? 'mb-24' : ''} mx-auto pt-32 md:mt-0 flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0`}
 >
+  {#if $flash && $flash.type === 'success'}
+    <div class="bg-green-800 text-white mb-10 w-full sm:max-w-md rounded-md">
+      <p class="p-6 text-center">{$flash?.message}. Login to continue</p>
+    </div>
+  {/if}
   <div
     class="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0"
   >
@@ -30,6 +37,7 @@
       <form
         on:submit={(e) => {
           isLoading = true;
+          $flash = undefined
         }}
         use:enh={({ action, cancel }) => {
           // do stuff here

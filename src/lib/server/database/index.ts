@@ -1,4 +1,13 @@
-import { mysqlConnection } from './utils';
-import * as schema from './schema';
+import { PrismaClient } from "@prisma/client";
 
-export const drizzle = await mysqlConnection(schema);
+interface DBGlobal {
+    prisma: PrismaClient
+}
+
+declare const global: DBGlobal
+
+const prisma = global.prisma || new PrismaClient()
+
+if (process.env.NODE_ENV === 'development') global.prisma = prisma
+
+export default prisma

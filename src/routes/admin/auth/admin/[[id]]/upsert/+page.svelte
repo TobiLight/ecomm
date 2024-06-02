@@ -2,17 +2,17 @@
   import { superForm } from 'sveltekit-superforms/client';
   import AppInput from '$lib/components/AppInput.svelte';
   import AppForm from '$lib/components/AppForm.svelte';
-  import { upsertAdminSchema } from '$lib/validation';
+  import { userSchema } from '$lib/validation';
 
   export let data;
 
   const { form, errors, submitting, enhance } = superForm(data.form, {
-    validators: upsertAdminSchema,
+    validators: userSchema,
     taintedMessage: null,
   });
 </script>
 
-<AppForm name={{ singular: 'product' }} {enhance} submitting={$submitting}>
+<AppForm name={{ singular: 'admin' }} {enhance} submitting={$submitting}>
   <div class="sm:col-span-2">
     <AppInput
       input={{

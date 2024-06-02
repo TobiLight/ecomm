@@ -5,10 +5,11 @@ import { useRepository } from '$lib/server/repositories';
 import { hash } from '$lib/authentication/hash';
 import { jwt } from '$lib/authentication/jwt';
 import { setToken } from '$admin/utils';
+import { setFlash } from 'sveltekit-flash-message/server';
 
-export async function load() {
+export async function load(event) {
   const form = await superValidate(loginSchema);
-  return { form };
+  return { form};
 }
 
 export const actions = {
@@ -19,18 +20,22 @@ export const actions = {
     }
 
     const { email, password } = form.data;
-    const repository = useRepository('admin');
-    const loginData = await repository.getLoginData(email);
+    const repository = useRepository('user');
+    const loginData = await repository.getUserByEmail(email);
 
     if (loginData) {
-      const { adminPassword, ...jwtData } = loginData;
+      const {  id, email } = loginData;
+      
       const passwordMatched = await hash.compare(
         password,
-        adminPassword.password,
+        loginData.password,
       );
+
       if (passwordMatched) {
-        const token = jwt.encode(jwtData);
+        const token = jwt.encode({id, email});
         setToken(event, token);
+
+        setFlash({ type: 'success', message: 'Login success' }, event.cookies);
 
         throw redirect(303, '/admin/auth/dashboard');
       }

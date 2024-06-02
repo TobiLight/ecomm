@@ -1,20 +1,16 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import { message, superValidate } from 'sveltekit-superforms/server';
+import { upsertAdminSchema, userSchema } from '$lib/validation';
+import { createUser } from '$admin/utils.server';
 import { useRepository } from '$lib/server/repositories';
-import { upsertAdminSchema } from '$lib/validation';
-import { upsertAdmin } from '$admin/utils.server';
-
-function isAdminExists() {
-  const repository = useRepository('admin');
-  return repository.getOne();
-}
+import { setFlash } from 'sveltekit-flash-message/server';
 
 export async function load() {
   // if (await isAdminExists()) {
   //   throw redirect(303, '/admin/guest/login');
   // }
 
-  const form = await superValidate(upsertAdminSchema);
+  const form = await superValidate(userSchema);
   return { form };
 }
 
@@ -24,18 +20,31 @@ export const actions = {
     //   throw error(401);
     // }
 
-    const form = await superValidate(event, upsertAdminSchema);
+    const form = await superValidate(event, userSchema);
     if (!form.valid) {
       return fail(400, { form });
     }
 
+    const repo = useRepository('user');
+
+    const existingUser = await repo.emailExists(form.data.email);
+
+    if (existingUser)
+      return message(form, 'Record already exists!', {
+        status: 400,
+      });
+
     try {
-      await upsertAdmin(form.data);
+      await createUser(form.data);
+      event.locals.flashMessage = 'Registration Successful';
     } catch (err: any) {
       return message(form, err.message, {
         status: 400,
       });
     }
+
+    setFlash({ type: 'success', message: 'Registration success' }, event.cookies);
+
     throw redirect(303, '/admin/guest/login');
   },
 };

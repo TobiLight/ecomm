@@ -2,6 +2,9 @@ import { type Handle, redirect } from '@sveltejs/kit';
 import { getToken } from '$admin/utils';
 import { jwt } from '$lib/authentication/jwt';
 
+// import { config } from 'dotenv'
+// config({ path: '.env' })
+
 export const handle: Handle = async ({ event, resolve }) => {
   const token = getToken(event);
 

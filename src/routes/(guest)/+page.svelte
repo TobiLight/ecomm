@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="w-full col-span-3">
-    {#if products.items.length === 0}
+    {#if products && products.length === 0}
       <div class="w-full flex flex-col items-center justify-center gap-10">
         <img loading="lazy" src={noDataFound} alt="No Products Found" />
         <h3 class="text-xl font-bold text-gray-900 dark:text-white">

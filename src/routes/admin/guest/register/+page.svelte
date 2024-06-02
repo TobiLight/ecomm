@@ -3,19 +3,20 @@
   import AppInput from '$lib/components/AppInput.svelte';
   import ErrorAlert from '$lib/components/ErrorAlert.svelte';
   import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
-  import { upsertAdminSchema } from '$lib/validation';
+  import { userSchema } from '$lib/validation';
   import { enhance as enh, applyAction } from '$app/forms';
 
   export let data;
 
   const { form, errors, delayed, enhance, message } = superForm(data.form, {
-    validators: upsertAdminSchema,
+    validators: userSchema,
   });
   let isLoading = false;
+  
 </script>
 
 <div
-    class={`${$message ? 'pt-52 mb-24' : 'pt-36 mb-20'} mx-auto md:mt-0 flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0`}
+    class={`${$message ? 'pt-52 mb-24' : 'pt-64 mb-32'} mx-auto md:mt-0 flex flex-col items-center justify-center px-6 py-8 md:h-screen`}
 
 >
   <div
@@ -38,7 +39,10 @@
           return async ({ result, update }) => {
             if (result) {
               isLoading = false;
+              // $message = result.data.form.message
+              console.log(result)
               await applyAction(result);
+              // update({reset: true})
             }
           };
         }}

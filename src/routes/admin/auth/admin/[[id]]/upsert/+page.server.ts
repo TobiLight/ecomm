@@ -1,15 +1,15 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
-import { upsertAdminSchema } from '$lib/server/validation';
+import { upsertAdminSchema, userSchema } from '$lib/server/validation';
 import { useRepository } from '$lib/server/repositories';
-import { upsertAdmin } from '$admin/utils.server';
+import { createUser, upsertAdmin } from '$admin/utils.server';
 
-const repository = useRepository('admin');
+const repository = useRepository('user');
 
 export async function load(event) {
   const form = await superValidate(upsertAdminSchema);
 
-  const id = Number(event.params.id);
+  const id = event.params.id;
   if (id) {
     const item = await repository.getOne(id);
     return {
@@ -28,12 +28,12 @@ export const actions = {
     if (id) {
       formData.append('id', id);
     }
-    const form = await superValidate(formData, upsertAdminSchema);
+    const form = await superValidate(formData, userSchema);
     if (!form.valid) {
       return fail(400, { form });
     }
 
-    await upsertAdmin(form.data);
+    await createUser(form.data);
 
     throw redirect(303, '/admin/auth/admin/list');
   },

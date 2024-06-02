@@ -7,6 +7,10 @@ declare global {
     // interface Error {}
     interface Locals {
       admin: JwtData;
+      flashMessage: string
+    }
+    interface PageData {
+      flash?: { type: 'success' | 'error'; message: string };
     }
     // interface PageData {}
     // interface Platform {}

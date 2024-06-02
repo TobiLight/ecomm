@@ -12,17 +12,19 @@ import {
 } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { mysqlTableCreator } from './utils';
-import  {mysqlEnum} from "drizzle-orm/mysql-core"
+import { mysqlEnum } from 'drizzle-orm/mysql-core';
 
 const mysqlTable = mysqlTableCreator();
 
 export const admins = mysqlTable(
   'admins',
   {
-    id: serial('id').primaryKey(),
+    id: serial('id').primaryKey().unique(),
     name: varchar('name', { length: 256 }).notNull(),
     email: varchar('email', { length: 256 }).notNull(),
+    password: varchar('password', { length: 256 }).notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
+    role: mysqlEnum('role', ['user', 'admin']).notNull().default("user"),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
   },
   (table) => ({
@@ -45,13 +47,13 @@ export const admins = mysqlTable(
 //   }),
 // );
 
-export const adminPasswords = mysqlTable('admin_passwords', {
-  id: serial('id').primaryKey(),
-  adminId: bigint('admin_id', { mode: 'number' }).references(() => admins.id),
-  password: varchar('password', { length: 256 }).notNull(),
-  createdAt: timestamp('created_at').notNull().defaultNow(),
-  updatedAt: timestamp('updated_at').notNull().defaultNow(),
-});
+// export const adminPasswords = mysqlTable('admin_passwords', {
+//   id: serial('id').primaryKey(),
+//   adminId: bigint('admin_id', { mode: 'number' }).references(() => admins.id),
+//   password: varchar('password', { length: 256 }).notNull(),
+//   createdAt: timestamp('created_at').notNull().defaultNow(),
+//   updatedAt: timestamp('updated_at').notNull().defaultNow(),
+// });
 
 export const categories = mysqlTable('categories', {
   id: serial('id').primaryKey(),
@@ -87,12 +89,12 @@ export const orders = mysqlTable('orders', {
   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 });
 
-export const adminsRelations = relations(admins, ({ one }) => ({
-  adminPassword: one(adminPasswords, {
-    fields: [admins.id],
-    references: [adminPasswords.adminId],
-  }),
-}));
+// export const adminsRelations = relations(admins, ({ one }) => ({
+//   adminPassword: one(adminPasswords, {
+//     fields: [admins.id],
+//     references: [adminPasswords.adminId],
+//   }),
+// }));
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
   products: many(products),

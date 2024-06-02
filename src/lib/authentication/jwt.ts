@@ -2,8 +2,8 @@ import jwtwebtoken from 'jsonwebtoken';
 import { JWT_SECRET } from '$env/static/private';
 
 export interface JwtData {
-  id: number;
-  name: string;
+  id: string;
+  // name?: string;
   email: string;
 }
 
