@@ -1,10 +1,10 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
   import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
-  import type { Select } from '$lib/server/repositories/product-repository';
+    import type { Product } from '@prisma/client';
 
   export let isInCart: boolean;
-  export let product: Pick<Select, 'id'>;
+  export let product: Pick<Product, "id">;
 
   let submitting = false;
 </script>

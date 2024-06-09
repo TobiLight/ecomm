@@ -20,7 +20,8 @@
         <li>
           <a
             href="/"
-            class="block text-primary-700 dark:text-primary-500"
+            class="block text-primary-700 dark:text-white"
+            class:active={$page.url.pathname === '/'}
             aria-current="page">Home</a
           >
         </li>
@@ -28,6 +29,7 @@
           <a
             href="/cart"
             class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+            class:active={$page.url.pathname === '/cart' }
             >Cart</a
           >
         </li>
@@ -36,6 +38,7 @@
             <a
               href="/admin/auth/dashboard"
               class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+              class:active={$page.url.pathname === '/admin/auth/dashboard/'}
               >Dashboard</a
             >
           </li>
@@ -52,6 +55,8 @@
             <a
               href="/admin/guest/login"
               class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+              class:active={$page.url.pathname === '/admin/guest/login/' }
+
               >Login</a
             >
           </li>
@@ -108,3 +113,9 @@
     </form>
   </div>
 </nav>
+
+<style type="postcss">
+  a.active {
+    color: #f97316;
+  }
+</style>

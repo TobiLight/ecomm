@@ -8,7 +8,7 @@ export const upsertAdminSchema = object({
 });
 
 export const userSchema = object({
-  id: coerce.string(),
+  id: string(),
   name: string().min(1).max(256).trim().optional(),
   email: string({
     required_error: 'Email field is required',
@@ -36,10 +36,7 @@ export const upsertProductSchema = object({
   name: string().min(1).max(256).trim(),
   description: string().min(1).max(256).trim(),
   image: custom(),
-  categoryId: coerce
-    .number()
-    .positive('Required')
-    .default('' as unknown as number),
+  categoryId: string({required_error: "Required"}),
   price: coerce
     .number()
     .positive()
@@ -51,7 +48,7 @@ export const upsertProductSchema = object({
 });
 
 export const upsertCategorySchema = object({
-  id: coerce.number().optional(),
+  id: string(),
   name: string().min(1).max(256).trim(),
   image: custom(),
 });
@@ -71,16 +68,13 @@ export const updateCartSchema = object({
     .default('' as unknown as number)
     .array()
     .min(1),
-  product: coerce
-    .number()
-    .positive()
-    .default('' as unknown as number)
+  product: string()
     .array()
     .min(1),
 });
 
 export const createOrderSchema = object({
-  id: coerce.number().optional(),
+  id: string(),
   name: string().min(1).max(256).trim(),
   email: string().email().min(1).max(256).trim(),
   phone: string().min(1).max(256).trim(),

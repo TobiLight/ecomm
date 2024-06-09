@@ -4,11 +4,7 @@
   import Sidebar from './components/Sidebar.svelte';
   import Footer from '$admin/components/Footer.svelte';
   import Navbar from '$admin/components/Navbar.svelte';
-  import { getFlash } from 'sveltekit-flash-message';
-  import { page } from '$app/stores';
-  
-
-  const flash = getFlash(page);
+    import type { PageData } from './dashboard/$types';
 
   const links: LinkItem[] = [
     {
@@ -35,20 +31,24 @@
       icon: 'mdi:shopping',
     },
     {
+      name: 'Orders',
+      active: '/admin/auth/order',
+      href: '/admin/auth/order/list',
+      icon: 'mdi:cart',
+    },
+    {
       name: 'Logout',
       href: '/admin/auth/guest/logout',
       icon: 'mdi:logout',
     },
   ];
+
+  export let data: PageData
+  $: user = data.currentUser
 </script>
 
 <div class="relative">
-  {#if $flash && $flash.type === 'success'}
-    <div class="absolute z-[5] bg-green-800 text-white mb-10 w-auto sm:max-w-md right-0 mt-20 rounded-md">
-      <p class="p-6">{$flash?.message}.</p>
-    </div>
-  {/if}
-  <Navbar />
+  <Navbar isLoggedIn={user ? true : false} />
 
   <Sidebar {links} />
 

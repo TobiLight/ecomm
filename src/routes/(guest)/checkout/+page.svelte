@@ -14,10 +14,10 @@
 
   $: cart = data.cart;
   $: products = data.products;
-  $: total = products.reduce(
-    (total, product) => total + product.price * (cart.get(product.id) || 1),
-    0,
-  );
+  $: total = products.reduce((total, product) => {
+    console.log(cart.get(product.id))
+    return (total + product.price) * (cart.get(product.id) as number)
+  }, 0);
 </script>
 
 <div class="w-full py-24">

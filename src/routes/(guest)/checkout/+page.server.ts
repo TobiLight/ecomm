@@ -39,23 +39,27 @@ export const actions = {
       Array.from(cart.keys()),
     );
     const total = products.reduce(
-      (total, product) => total + product.price * (cart.get(product.id) || 1),
+      (total, product) =>
+        total + product.price * (cart.get(product.id) as number),
       0,
     );
 
-    const { id: orderId } = await useRepository('order').create({
+    const data = await useRepository('order').create({
       ...form.data,
       total,
     });
-    await useRepository('productToOrder').create(
-      products.map(({ id: productId }) => ({
-        productId,
-        orderId,
-      })),
-    );
 
-    removeCart(event);
+    if (data) {
+      await useRepository('productToOrder').createMany([
+        ...products.map(({ id: productID }) => ({
+          productID,
+          orderID: data.id,
+        })),
+      ]);
 
-    throw redirect(303, '/');
+      removeCart(event);
+
+      throw redirect(303, '/');
+    }
   },
 };

@@ -7,6 +7,7 @@
   import { dev } from '$app/environment';
 
   export let dummy = false;
+  export let showCreateBtn = true;
   export let items: Record<string, unknown>[];
   export let columns: string[];
   export let totalPages: number;
@@ -29,9 +30,11 @@
           <DummyButton />
         </form>
       {/if}
-      <AppAddLink href="/admin/auth/{name.singular}/upsert">
-        {name.singular}
-      </AppAddLink>
+      {#if showCreateBtn}
+        <AppAddLink href="/admin/auth/{name.singular}/create">
+          {name.singular}
+        </AppAddLink>
+      {/if}
     </div>
   </div>
 
@@ -44,9 +47,11 @@
           {#each columns as column}
             <th scope="col" class="px-6 py-3"> {column} </th>
           {/each}
-          <th scope="col" class="px-6 py-3">
-            <span class="sr-only">Actions</span>
-          </th>
+          {#if showCreateBtn}
+            <th scope="col" class="px-6 py-3">
+              <span class="sr-only">Actions</span>
+            </th>
+          {/if}
         </tr>
       </thead>
       <tbody>
@@ -60,9 +65,11 @@
           {#each columns as column}
             <th scope="col" class="px-6 py-3"> {column} </th>
           {/each}
-          <th scope="col" class="px-6 py-3">
-            <span class="sr-only">Actions</span>
-          </th>
+          {#if showCreateBtn}
+            <th scope="col" class="px-6 py-3">
+              <span class="sr-only">Actions</span>
+            </th>
+          {/if}
         </tr>
       </tfoot>
     </table>

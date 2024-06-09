@@ -1,15 +1,18 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import type { Select } from '$lib/server/repositories/category-repository';
   import { getParamsString } from '$lib/utils';
+    import type { Category } from '@prisma/client';
 
-  export let category: Pick<Select, 'id' | 'name' | 'image'>;
+  export let category: Pick<Category, 'id' | 'name' | 'image'>;
   let href: string;
   $: {
     let categoryParam: Record<string, string> | undefined;
+    
+
+    categoryParam = { categoryID: category.id.toString(), name: category.name.toString() };
 
     if (category.name !== 'All') {
-      categoryParam = { category: category.id.toString() };
+      categoryParam = { categoryID: category.id.toString(), name: category.name.toString() };
     }
 
     const allParams = getParamsString(

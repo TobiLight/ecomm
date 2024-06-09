@@ -12,14 +12,14 @@
   });
 </script>
 
-<AppForm name={{ singular: 'admin' }} {enhance} submitting={$submitting}>
+<AppForm name={{ singular: 'admin' }} {enhance} submitting={$submitting} actionType="Update">
   <div class="sm:col-span-2">
     <AppInput
       input={{
         name: 'name',
         placeholder: 'John Doe',
         errors: $errors.name,
-        value: data.item?.name,
+        value: data.item?.name || "",
       }}
       bind:value={$form.name}
     />

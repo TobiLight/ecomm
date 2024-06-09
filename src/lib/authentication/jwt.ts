@@ -15,7 +15,7 @@ class Jwt {
   }
 
   encode(data: JwtData) {
-    return jwtwebtoken.sign({ ...data }, this.secret);
+    return jwtwebtoken.sign({ ...data }, this.secret, {expiresIn: "2h"});
   }
 
   verify(token: string) {

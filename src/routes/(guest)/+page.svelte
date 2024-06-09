@@ -10,7 +10,8 @@
   export let data;
 
   $: categories = data.categories;
-  $: products = data.products;
+  $: products = data.products.items;
+  $: totalPages = data.products.totalPages
   $: cart = data.cart;
 </script>
 
@@ -33,7 +34,7 @@
     {:else}
       <div class="gap-16 flex flex-col">
         <div class="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
-          {#each products.items as product}
+          {#each products as product}
             <div
               class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
             >
@@ -68,7 +69,7 @@
           {/each}
         </div>
         <AppPagination
-          totalPages={products.totalPages}
+          totalPages={totalPages}
           class="flex justify-center"
         />
       </div>

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { DarkMode } from 'flowbite-svelte';
   import AppLogo from '$lib/components/AppLogo.svelte';
+  import { page } from '$app/stores';
+  export let isLoggedIn: boolean;
 </script>
 
 <nav
@@ -11,11 +13,11 @@
       <div class="flex items-center justify-start">
         <!-- TODO: Make button work -->
         <button
-          data-drawer-target="logo-sidebar"
-          data-drawer-toggle="logo-sidebar"
-          aria-controls="logo-sidebar"
+          data-drawer-target="Sidebar"
+          data-drawer-toggle="Sidebar"
+          aria-controls="Sidebar"
           type="button"
-          class="inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 sm:hidden"
+          class="inline-flex items-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
         >
           <span class="sr-only">Open sidebar</span>
           <svg
@@ -36,6 +38,54 @@
           <AppLogo />
         </div>
       </div>
+
+        <ul
+          class="hidden md:flex font-medium rounded-lg space-x-8 bg-white dark:bg-gray-800 dark:border-gray-700"
+        >
+          <li>
+            <a
+              href="/"
+              class="block text-primary-700 dark:text-white"
+              class:active={$page.url.pathname === '/'}
+              aria-current="page">Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="/cart"
+              class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+              class:active={$page.url.pathname === '/cart'}>Cart</a
+            >
+          </li>
+          {#if isLoggedIn}
+            <li>
+              <a
+                href="/admin/auth/dashboard"
+                class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+                class:active={$page.url.pathname.includes('/admin/auth/')}
+                >Dashboard</a
+              >
+            </li>
+
+            <form action="/admin/auth/logout" method="post">
+              <button
+                class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+              >
+                Logout
+              </button>
+            </form>
+          {:else}
+            <li>
+              <a
+                href="/admin/guest/login"
+                class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+                class:active={$page.url.pathname === '/admin/guest/login/'}
+                >Login</a
+              >
+            </li>
+          {/if}
+        </ul>
+
       <div class="flex items-center">
         <div class="mr-3 flex items-center">
           <DarkMode />
@@ -44,3 +94,9 @@
     </div>
   </div>
 </nav>
+
+<style type="postcss">
+  a.active {
+    color: #f97316;
+  }
+</style>

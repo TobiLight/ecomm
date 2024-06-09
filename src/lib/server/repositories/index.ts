@@ -5,21 +5,27 @@
 // import { ProductToOrderRepository } from './product-to-order-repository';
 import {UserRepository} from "./user-repository"
 import prisma from '../database';
+import { CategoryRepository } from "./category-repository";
+import { ProductRepository } from "./product-repository";
+import { OrderRepository } from "./order-repository";
+import { ProductToOrderRepository } from "./product-to-order-repository";
 
 // const admin = new AdminRepository();
 // const product = new ProductRepository();
 // const category = new CategoryRepository();
 // const order = new OrderRepository();
-// const productToOrder = new ProductToOrderRepository();
-const user = new UserRepository(prisma)
+const user = new UserRepository()
+const category = new CategoryRepository()
+const product = new ProductRepository()
+const order = new OrderRepository()
+const productToOrder = new ProductToOrderRepository();
 
 const repositories = {
-  // admin,
-  // product,
-  // category,
-  // order,
-  // productToOrder,
-  user
+  user,
+  category,
+  product,
+  order,
+  productToOrder
 };
 
 type Repositories = typeof repositories;

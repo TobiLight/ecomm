@@ -1,7 +1,7 @@
 import type { RequestEvent } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 
-type CartMap = Map<number, number>;
+type CartMap = Map<string, string | number>;
 
 export function setCart(event: RequestEvent, cart: CartMap) {
   event.cookies.set('cart', JSON.stringify([...cart]), {

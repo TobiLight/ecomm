@@ -1,10 +1,12 @@
-import { Prisma, PrismaClient, User } from '@prisma/client';
+import { $Enums, Prisma, PrismaClient, User } from '@prisma/client';
 import { BaseRepository } from './base-repository';
 import { v4 as uuid4 } from 'uuid';
+import prisma from '../database';
 
 export class UserRepository extends BaseRepository<'user'> {
-  constructor(prisma: PrismaClient) {
+  constructor() {
     super(prisma, 'user');
+    // this.prisma.$connect()
   }
 
   async create(
@@ -14,7 +16,7 @@ export class UserRepository extends BaseRepository<'user'> {
     name: string | null;
     email: string;
     password: string;
-    role: string;
+    role: $Enums.Role;
     createdAt: Date;
     updatedAt: Date;
   } | null> {
@@ -23,6 +25,7 @@ export class UserRepository extends BaseRepository<'user'> {
         data: {
           ...data,
           id: uuid4(),
+          role: data.role,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

@@ -1,12 +1,18 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+  binaryTargets   = ["native"]
+}
+
+generator zod {
+  provider              = "zod-prisma"
+  output                = "./zod"
+  useDecimalJs          = "true"
+  prismaJsonNullability = "true"
+  modelCase             = "PascalCase"
+  modelSuffix           = "Model"
+  relationModel         = "true"
+  imports               = "../src/zod-schemas"
 }
 
 datasource db {
@@ -14,22 +20,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// prisma repo generator
-generator repo {
-  provider = "prisma-client-js"
-  output   = "../src/repository"
-  query    = true
-  warn     = true
-  info     = true
-  error    = true
-}
-
 model User {
-  id        String   @id @unique @default(cuid())
+  /// @zod.uuid()
+  id        String   @id @unique @default(uuid())
   name      String?
   email     String   @unique
   password  String
-  role      String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  role      Role     @default(USER)
+}
+
+model Category {
+  /// @zod.uuid()
+  id        String    @id @unique @default(uuid())
+  /// @zod.max(255, { message: "The title must be shorter than 256 characters" })
+  name      String
+  image     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  products  Product[]
+}
+
+model Product {
+  /// @zod.uuid()
+  id          String           @id @unique @default(uuid())
+  /// @zod.max(255, { message: "The title must be shorter than 256 characters" })
+  name        String
+  description String
+  createdAt   DateTime         @default(now())
+  image       String
+  price       Float
+  quantity    Int
+  updatedAt   DateTime         @default(now())
+  categoryId  String
+  category    Category         @relation(fields: [categoryId], references: [id])
+  orders      ProductToOrder[]
+}
+
+model Order {
+  id        String           @id @unique @default(uuid())
+  name      String           @db.VarChar(50)
+  email     String
+  phone     String           @db.VarChar(256)
+  city      String           @db.VarChar(256)
+  address   String           @db.VarChar(256)
+  total     Float
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now())
+  products  ProductToOrder[]
+}
+
+model ProductToOrder {
+  id        String   @id @unique @default(uuid())
+  productID String
+  orderID   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  order     Order    @relation(fields: [orderID], references: [id])
+  product   Product  @relation(fields: [productID], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
 }

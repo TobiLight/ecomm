@@ -5,12 +5,11 @@ import { useRepository } from '$lib/server/repositories';
 import { throwIfNotFound } from '$lib/utils';
 import { deleteFile, uploadFile } from '$lib/server/filesystem';
 
-const repository = useRepository('category');
-
 export async function load(event) {
   const form = await superValidate(upsertCategorySchema);
+  const repository = useRepository('category');
 
-  const id = Number(event.params.id);
+  const id = event.params.id;
   if (id) {
     const item = await repository.getOne(id);
     return {
@@ -25,10 +24,12 @@ export async function load(event) {
 export const actions = {
   default: async (event) => {
     const formData = await event.request.formData();
-    const id = Number(event.params.id);
+    const id = event.params.id;
+
     if (id) {
       formData.append('id', String(id));
     }
+
     const form = await superValidate(formData, upsertCategorySchema);
     if (!form.valid) {
       return fail(400, { form });
@@ -42,15 +43,17 @@ export const actions = {
       return fail(400, { form });
     }
 
+    const repository = useRepository('category');
+
     if (id) {
       if (form.data.image) {
-        const { image } = throwIfNotFound(await repository.getOne(id));
+        const { image } = throwIfNotFound(await repository.getOne(String(id)));
         await deleteFile(image);
       }
 
-      throwIfNotFound(await repository.update(form.data, id));
+      throwIfNotFound(await repository.update({id: id, name: form.data.name, image: form.data.image}));
     } else {
-      await repository.create(form.data);
+      await repository.create({ image: form.data.image, name: form.data.name });
     }
 
     throw redirect(303, '/admin/auth/category/list');

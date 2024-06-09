@@ -35,8 +35,6 @@ export const actions = {
         const token = jwt.encode({id, email});
         setToken(event, token);
 
-        setFlash({ type: 'success', message: 'Login success' }, event.cookies);
-
         throw redirect(303, '/admin/auth/dashboard');
       }
     }

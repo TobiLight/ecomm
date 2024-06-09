@@ -13,8 +13,7 @@
     "prepare": "nx exec --  svelte-kit sync",
     "typecheck": "nx exec -- svelte-check --tsconfig ./tsconfig.json",
     "lint": "nx exec -- eslint .",
-    "fmt": "nx exec -- prettier --write .",
-    "migration": "nx exec -- drizzle-kit generate:mysql --schema=./src/lib/server/database/schema.ts --out=./.migrations"
+    "fmt": "nx exec -- prettier --write ."
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.40.0",
@@ -89,6 +88,7 @@
     "@prisma/client": "^5.14.0",
     "cardinal": "^2.1.1",
     "pg": "^8.11.5",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "zod-prisma": "^0.5.4"
   }
 }

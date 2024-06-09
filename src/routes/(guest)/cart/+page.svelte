@@ -31,6 +31,7 @@
     <form
       use:enhance
       method="post"
+      action="/product/?/updateAndCheckout"
       class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-5 xl:px-0 px-5"
     >
       <div
@@ -97,9 +98,11 @@
                     use:enhance
                     method="post"
                     action="/product/{product.id}?/remove"
+                    id="Form1"
                   >
                     <button
                       type="submit"
+                      form="Form1"
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"
                       >Remove</button
                     >
@@ -120,11 +123,11 @@
           <span class="text-3xl font-semibold">{currency}</span>
           <span class="text-5xl font-extrabold tracking-tight">{total}</span>
         </div>
-        <SubmitButton wFull submitting={$submitting}>Update order</SubmitButton>
-        <a
-          href="/checkout"
+        <!-- <SubmitButton wFull submitting={$submitting}>Update order</SubmitButton> -->
+        <button
+          type="submit"
           class="text-white bg-secondary-600 hover:bg-secondary-700 focus:ring-4 focus:outline-none focus:ring-secondary-200 dark:focus:ring-secondary-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
-          >Place order</a
+          >Place order</button
         >
       </div>
     </form>

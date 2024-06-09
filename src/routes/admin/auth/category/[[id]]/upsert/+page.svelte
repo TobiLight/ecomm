@@ -12,9 +12,13 @@
     validators: upsertCategorySchema,
     taintedMessage: null,
   });
+
+  $: console.log(errors)
+
 </script>
 
 <AppForm
+  actionType="Update"
   {enhance}
   enctype="multipart/form-data"
   name={{ singular: 'category', plural: 'categories' }}
