@@ -22,6 +22,6 @@ export async function load(event) {
   };
 
   return {
-    currentUser: getCurrentUser(),
+    currentUser: await getCurrentUser(),
   };
 }

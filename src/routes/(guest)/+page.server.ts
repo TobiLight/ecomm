@@ -22,18 +22,22 @@ export async function load(event) {
   const getProducts = async () => {
     const repository = useRepository('product');
     const params = formatListParams(event);
-    const items = await repository.getManyWithCategory(params, {name: filters.name ?? "All", categoryID: filters.categoryID  ?? (await getCategories())[0].id});
+    let _id = (await getCategories()).length > 0 ? (await getCategories())[0].id : "";
+    const items = await repository.getManyWithCategory(params, {
+      name: filters.name ?? 'All',
+      categoryID: filters.categoryID ?? _id,
+    });
 
     const ret = {
       items,
-      totalPages: items.length
-    }
+      totalPages: items.length,
+    };
 
     return formatListResponse(ret);
   };
 
   const getCurrentUser = async () => {
-    const repository = useRepository("user")
+    const repository = useRepository('user');
     if (event.locals.admin) {
       const user = await repository.getLoginData(event.locals.admin.email);
 
@@ -41,7 +45,7 @@ export async function load(event) {
     }
 
     return undefined;
-  }
+  };
 
   return {
     categories: getCategories(),

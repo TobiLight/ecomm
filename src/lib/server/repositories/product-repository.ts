@@ -48,6 +48,9 @@ export class ProductRepository extends BaseRepository<'Product'> {
   ): Promise<
     Array<Product & { category: Pick<Category, 'id' | 'name'> }> | []
   > {
+    if (filter && Object.entries(filter).length < 2) {
+      return []
+    }
     if (filter && Object.entries(filter).length > 0) {
       return await this.prisma.product.findMany({
         where: { categoryId: filter.categoryID },
