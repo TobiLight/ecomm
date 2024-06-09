@@ -9,16 +9,16 @@ export class OrderRepository extends BaseRepository<'Order'> {
   }
 
   async create(
-    data: Prisma.OrderCreateInput | Prisma.OrderUncheckedCreateInput
+    data: Prisma.OrderCreateInput | Prisma.OrderUncheckedCreateInput,
   ): Promise<Order | null> {
     return await this.prisma.order.create({
       data: {
         ...data,
         id: uuid4(),
-        total: data.total
+        total: data.total,
         // createdAt: new Date(),
         // updatedAt: new Date(),
-      }
+      },
     });
   }
 
@@ -29,7 +29,13 @@ export class OrderRepository extends BaseRepository<'Order'> {
     order?: Prisma.OrderOrderByWithRelationInput;
     skip?: number;
     take?: number;
-  }) {
+  }): Promise<
+    ({
+      products: {
+        product: Pick<Product, | 'name' | 'description' | 'price'>;
+      }[];
+    } & Order)[]
+  > {
     const { where, select, include, order, skip, take } = options || {};
 
     return await this.prisma.order.findMany({
@@ -44,7 +50,7 @@ export class OrderRepository extends BaseRepository<'Order'> {
               select: {
                 name: true,
                 description: true,
-                price: true
+                price: true,
               },
             },
           },
@@ -52,5 +58,4 @@ export class OrderRepository extends BaseRepository<'Order'> {
       },
     });
   }
-
 }

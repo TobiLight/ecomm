@@ -8,19 +8,6 @@ import { deleteFile, uploadFile } from '$lib/server/filesystem';
 const repository = useRepository('product');
 const categoryRepository = useRepository('category');
 
-export async function load(event) {
-  const categories = await categoryRepository.getMany();
-
-  const form = await superValidate(upsertProductSchema);
-
-  const id = Number(event.params.id);
-  if (id) {
-    const item = await repository.getOne(id);
-    return { item, form, categories };
-  }
-
-  return { form, categories };
-}
 
 export const actions = {
   default: async (event) => {

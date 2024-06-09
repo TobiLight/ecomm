@@ -43,6 +43,20 @@
     },
   ];
 
+  const userLinks = [
+    {
+      name: 'Dashboard',
+      href: '/admin/auth/dashboard',
+      icon: 'mdi:view-dashboard-variant',
+    },
+    {
+      name: 'My Orders',
+      active: '/admin/auth/order',
+      href: '/admin/auth/order/list',
+      icon: 'mdi:cart',
+    },
+  ]
+
   export let data: PageData
   $: user = data.currentUser
 </script>
@@ -50,7 +64,7 @@
 <div class="relative">
   <Navbar isLoggedIn={user ? true : false} />
 
-  <Sidebar {links} />
+  <Sidebar links={user?.role === 'USER' ? userLinks : links} />
 
   <div
     class="flex min-h-screen flex-col gap-y-5 bg-gray-100 p-6 dark:bg-gray-900 md:ml-64"
