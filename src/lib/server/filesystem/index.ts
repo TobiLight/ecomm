@@ -1,12 +1,12 @@
 import { env } from 'node:process';
 import sharp, { type ResizeOptions, type Sharp } from 'sharp';
-import { sThree } from './s-three';
+// import { sThree } from './s-three';
 import { local } from './local';
 
 let filesystem = local;
-if (env.FILESYSTEM_DISK === 'S3') {
-  filesystem = sThree;
-}
+// if (env.FILESYSTEM_DISK === 'S3') {
+//   filesystem = sThree;
+// }
 
 const resizes: Record<'product' | 'category', ResizeOptions> = {
   product: {
