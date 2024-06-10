@@ -21,6 +21,7 @@
   enctype="multipart/form-data"
   name={{ singular: 'product' }}
   submitting={$submitting}
+  actionType={}
 >
   <div class="sm:col-span-2">
     <AppSelect
