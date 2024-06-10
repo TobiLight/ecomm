@@ -4,7 +4,7 @@
   import Sidebar from './components/Sidebar.svelte';
   import Footer from '$admin/components/Footer.svelte';
   import Navbar from '$admin/components/Navbar.svelte';
-    import type { PageData } from './dashboard/$types';
+  import type { PageData } from './dashboard/$types';
 
   const links: LinkItem[] = [
     {
@@ -55,16 +55,16 @@
       href: '/admin/auth/order/list',
       icon: 'mdi:cart',
     },
-  ]
+  ];
 
-  export let data: PageData
-  $: user = data.currentUser
+  export let data: PageData;
+  $: user = data.currentUser;
 </script>
 
 <div class="relative">
   <Navbar isLoggedIn={user ? true : false} />
 
-  <Sidebar links={user?.role === 'USER' ? userLinks : links} />
+  <Sidebar links={user?.role === 'ADMIN' ? userLinks : links} />
 
   <div
     class="flex min-h-screen flex-col gap-y-5 bg-gray-100 p-6 dark:bg-gray-900 md:ml-64"

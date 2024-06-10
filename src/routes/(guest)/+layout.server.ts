@@ -18,7 +18,7 @@ export async function load(event) {
       return user;
     }
 
-    return undefined;
+    return null;
   };
 
   return {

@@ -13,12 +13,6 @@ export async function load(event) {
 
   const form = await superValidate(upsertProductSchema);
 
-  const id = Number(event.params.id);
-  if (id) {
-    const item = await repository.getOne(id);
-    return { item, form, categories };
-  }
-
   return { form, categories };
 }
 

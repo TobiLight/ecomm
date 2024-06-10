@@ -14,6 +14,8 @@
     validators: upsertProductSchema,
     taintedMessage: null,
   });
+
+  $: console.log("data", data)
 </script>
 
 <AppForm
