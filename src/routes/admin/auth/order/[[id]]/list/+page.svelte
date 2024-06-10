@@ -7,8 +7,6 @@
   $: items = data.data.items;
   $: totalPages = data.data.totalPages;
 
-  $: console.log(items)
-
   const name = { singular: 'order' };
 </script>
 

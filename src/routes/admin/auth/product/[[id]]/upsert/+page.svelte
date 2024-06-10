@@ -14,6 +14,7 @@
     validators: upsertProductSchema,
     taintedMessage: null,
   });
+
 </script>
 
 <AppForm
@@ -21,6 +22,7 @@
   enctype="multipart/form-data"
   name={{ singular: 'product' }}
   submitting={$submitting}
+  actionType={"Update"}
 >
   <div class="sm:col-span-2">
     <AppSelect
