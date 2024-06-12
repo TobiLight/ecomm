@@ -30,7 +30,7 @@ export const actions = {
       form.data.image = image;
     }
 
-    await repository.create({ ...form.data, image: form.data.image as string });
+    await repository.create({ ...form.data, image: image });
 
     throw redirect(303, '/admin/auth/product/list');
   },
