@@ -48,9 +48,7 @@ export const actions = {
         await deleteFile(image);
       }
 
-      throwIfNotFound(await repository.update(form.data);
-    } else {
-      await repository.create(form.data);
+      throwIfNotFound(await repository.update(form.data));
     }
 
     throw redirect(303, '/admin/auth/product/list');
