@@ -1,6 +1,8 @@
 import { useRepository } from '$lib/server/repositories';
 import { formatListParams, formatListResponse } from '$lib/utils/list';
 import { categories, products } from '$lib/server/dummy';
+import { deleteFile } from '$lib/server/filesystem';
+import { throwIfNotFound } from '$lib/utils';
 
 const repository = useRepository('product');
 
@@ -20,14 +22,15 @@ export async function load(event) {
 }
 
 export const actions = {
-  // destroy: async (event) => {
-  //   const id = Number(event.params.id);
-  //   if (id) {
-  //     const { image } = throwIfNotFound(await repository.getOne(id));
-  //     await deleteFile(image);
-  //     return throwIfNotFound(await repository.destroy(id));
-  //   }
-  // },
+  destroy: async (event) => {
+    const id = event.params.id;
+
+    if (id) {
+      const { image } = throwIfNotFound(await repository.getOne(id));
+      await deleteFile(image);
+      return throwIfNotFound(await repository.deleteOne(id));
+    }
+  },
   dummy: async () => {
     const items = await categories();
 

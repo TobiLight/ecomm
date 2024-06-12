@@ -15,7 +15,7 @@ import { throwIfNotFound } from '$lib/utils';
 // }
 
 export async function createUser(
-  input: z.infer<typeof userSchema>,
+  input: z.infer<typeof userSchema>, user_type: "user" | "admin" = "user"
 ): Promise<User | null> {
   const repo = useRepository('user');
   let admin: Awaited<ReturnType<typeof repo.create>>;
@@ -28,7 +28,7 @@ export async function createUser(
     return await repo.create({
       ...input,
       password,
-      role: input.role === 'user' ? 'USER' : 'ADMIN',
+      role: user_type === "user" ? 'USER' : 'ADMIN',
       createdAt: new Date(),
       updatedAt: new Date(),
     });

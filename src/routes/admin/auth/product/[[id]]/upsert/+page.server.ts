@@ -25,7 +25,7 @@ export async function load(event) {
 export const actions = {
   default: async (event) => {
     const formData = await event.request.formData();
-    const id = Number(event.params.id);
+    const id = event.params.id;
     if (id) {
       formData.append('id', String(id));
     }
@@ -48,7 +48,7 @@ export const actions = {
         await deleteFile(image);
       }
 
-      throwIfNotFound(await repository.update(form.data, id));
+      throwIfNotFound(await repository.update(form.data);
     } else {
       await repository.create(form.data);
     }

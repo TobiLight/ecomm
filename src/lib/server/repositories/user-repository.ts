@@ -25,7 +25,6 @@ export class UserRepository extends BaseRepository<'user'> {
         data: {
           ...data,
           id: uuid4(),
-          role: data.role,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

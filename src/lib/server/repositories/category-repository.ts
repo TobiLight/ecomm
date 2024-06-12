@@ -1,6 +1,6 @@
 import { BaseRepository } from './base-repository';
 import { categories } from '$lib/server/database/schema';
-import { Prisma, PrismaClient, Category } from '@prisma/client';
+import { Prisma, PrismaClient, Category, Product } from '@prisma/client';
 import prisma from '../database';
 import { v4 as uuid4 } from 'uuid';
 
@@ -50,8 +50,11 @@ export class CategoryRepository extends BaseRepository<'Category'> {
     });
   }
 
-  async getOne(id: string): Promise<Category | null> {
-    return await this.prisma.category.findUnique({ where: { id } });
+  async getOne(id: string): Promise<Category & {products: Product[]} | null> {
+    return await this.prisma.category.findUnique({
+      where: { id },
+      include: { products: true },
+    });
   }
 
   async update(data: {
@@ -60,5 +63,14 @@ export class CategoryRepository extends BaseRepository<'Category'> {
     image: string;
   }): Promise<Category> {
     return await this.prisma.category.update({ where: { id: data.id }, data });
+  }
+
+  async deleteOne(id: string): Promise<Category> {
+    return await this.prisma.category.delete({
+      where: {
+        id: id,
+      },
+      include: { products: true },
+    });
   }
 }

@@ -32,7 +32,7 @@ export const loginSchema = object({
 });
 
 export const upsertProductSchema = object({
-  id: coerce.number().optional(),
+  id: string().optional(),
   name: string().min(1).max(256).trim(),
   description: string().min(1).max(256).trim(),
   image: custom(),

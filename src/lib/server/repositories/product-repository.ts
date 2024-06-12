@@ -44,12 +44,12 @@ export class ProductRepository extends BaseRepository<'Product'> {
       limit: number;
       offset: number;
     },
-    filter?: { name?: string, categoryID?: string },
+    filter?: { name?: string; categoryID?: string },
   ): Promise<
     Array<Product & { category: Pick<Category, 'id' | 'name'> }> | []
   > {
     if (filter && Object.entries(filter).length < 2) {
-      return []
+      return [];
     }
     if (filter && Object.entries(filter).length > 0) {
       return await this.prisma.product.findMany({
@@ -108,5 +108,9 @@ export class ProductRepository extends BaseRepository<'Product'> {
     return await this.prisma.product.findMany({
       where: { id: { in: [...ids] } },
     });
+  }
+
+  async deleteOne(id: string): Promise<Product> {
+    return await this.prisma.product.delete({ where: { id: id } });
   }
 }
