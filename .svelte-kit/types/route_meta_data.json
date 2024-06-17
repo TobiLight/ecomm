@@ -1,0 +1,68 @@
+{
+	"/(guest)": [
+		"src/routes/(guest)/+page.server.ts",
+		"src/routes/(guest)/+layout.server.ts",
+		"src/routes/(guest)/+layout.server.ts"
+	],
+	"/": [],
+	"/admin/auth": [
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/auth/admin/[[id]]/list": [
+		"src/routes/admin/auth/admin/[[id]]/list/+page.server.ts",
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/auth/admin/[[id]]/upsert": [
+		"src/routes/admin/auth/admin/[[id]]/upsert/+page.server.ts",
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/auth/category/[[id]]/list": [
+		"src/routes/admin/auth/category/[[id]]/list/+page.server.ts",
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/auth/category/[[id]]/upsert": [
+		"src/routes/admin/auth/category/[[id]]/upsert/+page.server.ts",
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/auth/dashboard": [
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/auth/logout": [
+		"src/routes/admin/auth/logout/+page.server.ts",
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/auth/product/[[id]]/list": [
+		"src/routes/admin/auth/product/[[id]]/list/+page.server.ts",
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/auth/product/[[id]]/upsert": [
+		"src/routes/admin/auth/product/[[id]]/upsert/+page.server.ts",
+		"src/routes/admin/auth/+layout.server.ts"
+	],
+	"/admin/guest": [
+		"src/routes/admin/guest/+layout.server.ts"
+	],
+	"/admin/guest/login": [
+		"src/routes/admin/guest/login/+page.server.ts",
+		"src/routes/admin/guest/+layout.server.ts"
+	],
+	"/admin/guest/register": [
+		"src/routes/admin/guest/register/+page.server.ts",
+		"src/routes/admin/guest/+layout.server.ts"
+	],
+	"/(guest)/cart": [
+		"src/routes/(guest)/cart/+page.server.ts",
+		"src/routes/(guest)/+layout.server.ts"
+	],
+	"/(guest)/checkout": [
+		"src/routes/(guest)/checkout/+page.server.ts",
+		"src/routes/(guest)/+layout.server.ts"
+	],
+	"/(guest)/product/[id]": [
+		"src/routes/(guest)/product/[id]/+page.server.ts",
+		"src/routes/(guest)/+layout.server.ts"
+	],
+	"/uploads/[...key]": [
+		"src/routes/uploads/[...key]/+server.ts"
+	]
+}

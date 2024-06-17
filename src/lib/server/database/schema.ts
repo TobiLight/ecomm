@@ -12,7 +12,11 @@ import {
 } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
 import { mysqlTableCreator } from './utils';
+<<<<<<< HEAD
 import { mysqlEnum } from 'drizzle-orm/mysql-core';
+=======
+import  {mysqlEnum} from "drizzle-orm/mysql-core"
+>>>>>>> 4efa322e (Ecomm)
 
 const mysqlTable = mysqlTableCreator();
 
@@ -32,6 +36,7 @@ export const admins = mysqlTable(
   }),
 );
 
+<<<<<<< HEAD
 // export const users = mysqlTable(
 //   'users',
 //   {
@@ -54,6 +59,30 @@ export const admins = mysqlTable(
 //   createdAt: timestamp('created_at').notNull().defaultNow(),
 //   updatedAt: timestamp('updated_at').notNull().defaultNow(),
 // });
+=======
+export const users = mysqlTable(
+  'users',
+  {
+    id: serial('id').primaryKey(),
+    name: varchar('name', { length: 256 }).notNull(),
+    email: varchar('email', { length: 256 }).notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow(),
+    role: mysqlEnum('role', ['user', 'admin'])
+  },
+  (table) => ({
+    emailIdx: uniqueIndex('email_idx').on(table.email),
+  }),
+);
+
+export const adminPasswords = mysqlTable('admin_passwords', {
+  id: serial('id').primaryKey(),
+  adminId: bigint('admin_id', { mode: 'number' }).references(() => admins.id),
+  password: varchar('password', { length: 256 }).notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+>>>>>>> 4efa322e (Ecomm)
 
 export const categories = mysqlTable('categories', {
   id: serial('id').primaryKey(),

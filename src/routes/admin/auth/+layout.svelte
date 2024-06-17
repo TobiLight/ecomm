@@ -32,6 +32,7 @@
       icon: 'mdi:shopping',
     },
     {
+<<<<<<< HEAD
       name: 'Orders',
       active: '/admin/auth/order',
       href: '/admin/auth/order/list',
@@ -42,6 +43,12 @@
       href: '/admin/auth/guest/logout',
       icon: 'mdi:logout',
     },
+=======
+      name: 'Logout',
+      href: '/admin/auth/guest/logout',
+      icon: 'mdi:logout',
+    }
+>>>>>>> 4efa322e (Ecomm)
   ];
 
   const userLinks: LinkItem[] = [

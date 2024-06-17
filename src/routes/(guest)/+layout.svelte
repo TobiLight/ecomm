@@ -10,7 +10,11 @@
 </script>
 
 <div class="w-full flex flex-col min-h-screen">
+<<<<<<< HEAD
   <Navbar isLoggedIn={user ? true : false} />
+=======
+  <Navbar isLoggedIn={data.currentUser ? true : false} />
+>>>>>>> 4efa322e (Ecomm)
   <slot />
   <Footer />
 </div>

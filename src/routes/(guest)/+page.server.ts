@@ -47,10 +47,25 @@ export async function load(event) {
     return undefined;
   };
 
+  const getCurrentUser = async () => {
+    const repository = useRepository("admin")
+    if (event.locals.admin) {
+      const user = await repository.getLoginData(event.locals.admin.email);
+
+      return user;
+    }
+
+    return undefined;
+  }
+
   return {
     categories: getCategories(),
     products: getProducts(),
     cart: getCart(event),
+<<<<<<< HEAD
     // currentUser: getCurrentUser()
+=======
+    currentUser: getCurrentUser()
+>>>>>>> 4efa322e (Ecomm)
   };
 }

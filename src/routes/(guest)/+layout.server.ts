@@ -10,7 +10,11 @@ const filterSchema = z.object({
 
 export async function load(event) {
   const getCurrentUser = async () => {
+<<<<<<< HEAD
     const repository = useRepository('user');
+=======
+    const repository = useRepository('admin');
+>>>>>>> 4efa322e (Ecomm)
     
     if (event.locals.admin) {
       const user = await repository.getLoginData(event.locals.admin.email);
@@ -18,10 +22,18 @@ export async function load(event) {
       return user;
     }
 
+<<<<<<< HEAD
     return null;
   };
 
   return {
     currentUser: await getCurrentUser(),
+=======
+    return undefined;
+  };
+
+  return {
+    currentUser: getCurrentUser(),
+>>>>>>> 4efa322e (Ecomm)
   };
 }

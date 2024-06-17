@@ -22,6 +22,7 @@ export class AdminRepository extends BaseRepository<Admin> {
     }
   }
 
+
   async update(values: Create, id: number) {
     const result = await this.drizzle
       .update(this.table)

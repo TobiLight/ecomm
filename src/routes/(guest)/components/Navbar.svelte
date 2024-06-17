@@ -38,7 +38,10 @@
             <a
               href="/admin/auth/dashboard"
               class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+<<<<<<< HEAD
               class:active={$page.url.pathname === '/admin/auth/dashboard/'}
+=======
+>>>>>>> 4efa322e (Ecomm)
               >Dashboard</a
             >
           </li>
@@ -55,8 +58,11 @@
             <a
               href="/admin/guest/login"
               class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+<<<<<<< HEAD
               class:active={$page.url.pathname === '/admin/guest/login/' }
 
+=======
+>>>>>>> 4efa322e (Ecomm)
               >Login</a
             >
           </li>
