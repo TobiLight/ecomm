@@ -123,10 +123,7 @@ export abstract class BaseRepository<T extends keyof PrismaModelMapping> {
     data: Partial<PrismaModelMapping[T]>,
   ): Promise<PrismaModelMapping[T]> {
     // @ts-ignore
-    return await this.prisma[this.modelName].update(
-      { where: { data } },
-      { data },
-    );
+    return await this.prisma[this.modelName].update({ where: { id: data.id }, data })
   }
 
   async getMany(options?: {

@@ -15,8 +15,6 @@
   $: products = data.products.items;
   $: totalPages = data.products.totalPages;
   $: cart = data.cart;
-
-  $: console.log($navigating?.willUnload);
 </script>
 
 <div class="grid grid-cols-1 md:grid-cols-4 gap-y-5 md:gap-x-5 p-5">
@@ -28,7 +26,7 @@
     </div>
   </div>
   <div class="w-full col-span-3 flex">
-    {#if $navigating && $navigating.type === "link" }
+    {#if $navigating && $navigating.type === 'link' && $navigating.to?.route.id === '/(guest)'}
       <div class="mx-auto grid items-center justify-center text-white">
         <div class="flex items-center">
           <svg
