@@ -73,7 +73,6 @@ declare module '$env/static/private' {
 	export const CONDA_SHLVL: string;
 	export const npm_package_devDependencies__typescript_eslint_parser: string;
 	export const npm_package_dependencies_zod_prisma: string;
-	export const npm_config_force: string;
 	export const TERM_PROGRAM_VERSION: string;
 	export const VSCODE_IPC_HOOK_CLI: string;
 	export const npm_package_devDependencies_eslint_config_prettier: string;
@@ -205,6 +204,8 @@ declare module '$env/static/private' {
 	export const EDITOR: string;
 	export const npm_package_devDependencies__antfu_eslint_config: string;
 	export const npm_package_dependencies_pg: string;
+	export const NODE_ENV: string;
+	export const VIPSHOME: string;
 }
 
 /**
@@ -281,7 +282,6 @@ declare module '$env/dynamic/private' {
 		CONDA_SHLVL: string;
 		npm_package_devDependencies__typescript_eslint_parser: string;
 		npm_package_dependencies_zod_prisma: string;
-		npm_config_force: string;
 		TERM_PROGRAM_VERSION: string;
 		VSCODE_IPC_HOOK_CLI: string;
 		npm_package_devDependencies_eslint_config_prettier: string;
@@ -413,6 +413,8 @@ declare module '$env/dynamic/private' {
 		EDITOR: string;
 		npm_package_devDependencies__antfu_eslint_config: string;
 		npm_package_dependencies_pg: string;
+		NODE_ENV: string;
+		VIPSHOME: string;
 		[key: `PUBLIC_${string}`]: undefined;
 		[key: `${string}`]: string | undefined;
 	}
