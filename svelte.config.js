@@ -12,7 +12,6 @@ const config = {
     // If your environment is not supported or you settled on a specific environment, switch out the adapter.
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: adapter(),
-<<<<<<< HEAD
     alias: {
       $admin: './src/routes/admin',
       $guest: './src/routes/(guest)',
@@ -21,9 +20,4 @@ const config = {
 };
 
 
-=======
-  },
-};
-
->>>>>>> 7259bfdf (init: initial commit)
 export default config;

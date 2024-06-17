@@ -1,12 +1,8 @@
 {
   "singleQuote": true,
   "trailingComma": "all",
-<<<<<<< HEAD
-  "plugins": ["prettier-plugin-svelte"],
-=======
   "printWidth": 100,
   "plugins": ["prettier-plugin-svelte"],
   "pluginSearchDirs": ["."],
->>>>>>> 7259bfdf (init: initial commit)
   "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }
