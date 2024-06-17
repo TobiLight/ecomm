@@ -26,6 +26,9 @@ export const actions = {
     const id = event.params.id;
     if (id) {
       const { image, products } = throwIfNotFound(await repository.getOne(id));
+
+      let publicID = 'kvk_categories/' + image.split('/')[8].split('.')[0];
+
       if (products.length > 0) {
         throw error(
           400,
@@ -33,7 +36,7 @@ export const actions = {
         );
       }
 
-      await deleteFile(image);
+      await deleteFile(publicID);
       return throwIfNotFound(await repository.deleteOne(id));
     }
   },

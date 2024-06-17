@@ -31,11 +31,13 @@ export const actions = {
     }
 
     const form = await superValidate(formData, upsertCategorySchema);
+
     if (!form.valid) {
       return fail(400, { form });
     }
 
     const image = await uploadFile('image', formData, 'one');
+
     if (image) {
       form.data.image = image;
     } else if (!id) {
@@ -47,11 +49,19 @@ export const actions = {
 
     if (id) {
       if (form.data.image) {
-        const { image } = throwIfNotFound(await repository.getOne(String(id)));
-        await deleteFile(image);
+        const { image } = throwIfNotFound(await repository.getOne(id));
+        let publicID = 'kvk_categories/' + image.split('/')[8].split('.')[0];
+
+        await deleteFile(publicID);
       }
 
-      throwIfNotFound(await repository.update({id: id, name: form.data.name, image: form.data.image}));
+      throwIfNotFound(
+        await repository.update({
+          id: id,
+          name: form.data.name,
+          image: form.data.image,
+        }),
+      );
     } else {
       await repository.create({ image: form.data.image, name: form.data.name });
     }

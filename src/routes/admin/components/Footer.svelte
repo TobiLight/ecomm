@@ -13,5 +13,5 @@
     <a href="/" class="hover:underline" target="_blank">{PUBLIC_APP_NAME}</a>.
     All rights reserved.
   </p>
-  <AppSocialLinks />
+  <!-- <AppSocialLinks /> -->
 </footer>

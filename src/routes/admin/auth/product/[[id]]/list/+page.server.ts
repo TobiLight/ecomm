@@ -27,7 +27,11 @@ export const actions = {
 
     if (id) {
       const { image } = throwIfNotFound(await repository.getOne(id));
-      await deleteFile(image);
+
+      let publicID = 'kvk_products/' + image.split('/')[8].split('.')[0];
+      
+      await deleteFile(publicID);
+      
       return throwIfNotFound(await repository.deleteOne(id));
     }
   },

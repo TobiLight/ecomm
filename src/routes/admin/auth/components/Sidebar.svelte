@@ -8,9 +8,8 @@
 </script>
 
 <aside
-  class="fixed hidden left-0 top-0 z-40 mt-16 h-screen md:block w-64 -translate-x-full border-r border-gray-200 bg-white transition-transform dark:border-gray-700 dark:bg-gray-800 md:translate-x-0 py-6"
+  class="hidden fixed left-0 top-0 z-40 mt-16 h-screen md:block w-64 border-r border-gray-200 bg-white transition-transform dark:border-gray-700 dark:bg-gray-800 md:translate-x-0 py-6"
   aria-label="Sidebar"
-  id="Sidebar"
 >
   <div class="h-full overflow-y-auto bg-white px-3 dark:bg-gray-800">
     <ul class="space-y-2 font-medium">
