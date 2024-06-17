@@ -23,7 +23,7 @@
       currentTarget: EventTarget & HTMLInputElement;
     },
   ) {
-    selectedCategoryId = null
+    selectedCategoryId = null;
     searchQuery = event.currentTarget.value; // Lowercase for case-insensitive search
   }
 
@@ -35,34 +35,30 @@
       : data.categories;
 
   const filterCategoriesArr: Array<{
-    id: string,
-    name: string,
-    image: string
-    createdAt: Date
-    updatedAt: Date
-  }> = []
+    id: string;
+    name: string;
+    image: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }> = [];
 
   let fil = filteredCategories(searchQuery);
 
   function selectCategory(category: {
-    id: string,
-    name: string,
-    image: string
-    createdAt: Date
-    updatedAt: Date
+    id: string;
+    name: string;
+    image: string;
+    createdAt: Date;
+    updatedAt: Date;
   }) {
-    selectedCategoryId = category.id
-    filterCategoriesArr.push(category)
+    selectedCategoryId = category.id;
+    filterCategoriesArr.push(category);
   }
 
-  let tempCategory: {id: string,
-    name: string,
-    image: string
-    createdAt: Date
-    updatedAt: Date}
+  let tempCategory: { id: string; name: string; image: string; createdAt: Date; updatedAt: Date };
 
   $: fil = filteredCategories(searchQuery);
-  $: console.log("s", tempCategory)
+  $: console.log('s', tempCategory);
   // $: tempCategory ? filterCategoriesArr.push(tempCategory) : undefined
 </script>
 
@@ -93,32 +89,45 @@
         >
           {#each fil as category}
             <li
-              class="hover:bg-gray-100 px-3 py-2 cursor-pointer  border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              class="hover:bg-gray-100 px-3 py-2 cursor-pointer border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
               on:click={() => {
-                selectedCategoryId = null
-                selectCategory(category)
-                tempCategory = category
-              searchQuery = ""
-            }
-              }
+                selectedCategoryId = null;
+                if (filterCategoriesArr.some((cat) => category.id === cat.id)) {
+                  console.warn(
+                    'Category with ID',
+                    category.id,
+                    'already exists or does not exist in the fetched categories.',
+                  );
+                  searchQuery = '';
+                  selectedCategoryId = category.id
+
+
+                  return; // Prevent adding duplicate or non-existent category
+                }
+                selectCategory(category);
+                tempCategory = category;
+                searchQuery = '';
+              }}
             >
               {category.name}
             </li>
           {/each}
           {#if !filteredCategories(searchQuery).length && searchQuery.length > 0}
-            <li class="px-3 py-2  border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400">No matches found</li>
+            <li
+              class="px-3 py-2 border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+            >
+              No matches found
+            </li>
           {/if}
         </ul>
       {/if}
 
       {#if selectedCategoryId}
-        <div class="flex items-center mt-2">
-          <span class="mr-2 text-gray-600"
-            >Selected:</span
-          >
+        <div class="flex flex-col mt-2">
+          <label class="mr-2 text-gray-600 dark:text-white">Selected:</label>
           <ul>
             {#each filterCategoriesArr as categorySelected}
-            <li>{categorySelected.name}</li>
+              <li class="ml-4">{categorySelected.name}</li>
             {/each}
           </ul>
         </div>
