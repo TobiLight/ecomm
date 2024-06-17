@@ -1,0 +1,87 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+  binaryTargets   = ["native"]
+}
+
+generator zod {
+  provider              = "zod-prisma"
+  output                = "./zod"
+  useDecimalJs          = "true"
+  prismaJsonNullability = "true"
+  modelSuffix           = "Model"
+  modelCase             = "PascalCase"
+  relationModel         = "true"
+  imports               = "../src/zod-schemas"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model User {
+  /// @zod.uuid()
+  id        String   @id @unique @default(uuid())
+  name      String?
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  role      Role     @default(USER)
+}
+
+model Category {
+  /// @zod.uuid()
+  id        String    @id @unique @default(uuid())
+  /// @zod.max(255, { message: "The title must be shorter than 256 characters" })
+  name      String
+  image     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  products  Product[]
+}
+
+model Product {
+  /// @zod.uuid()
+  id          String           @id @unique @default(uuid())
+  /// @zod.max(255, { message: "The title must be shorter than 256 characters" })
+  name        String
+  description String
+  createdAt   DateTime         @default(now())
+  image       String
+  price       Float
+  quantity    Int
+  updatedAt   DateTime         @default(now())
+  categoryId  String
+  category    Category         @relation(fields: [categoryId], references: [id])
+  orders      ProductToOrder[]
+}
+
+model Order {
+  id        String           @id @unique @default(uuid())
+  name      String           @db.VarChar(50)
+  email     String
+  phone     String           @db.VarChar(256)
+  city      String           @db.VarChar(256)
+  address   String           @db.VarChar(256)
+  total     Float
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @default(now())
+  products  ProductToOrder[]
+}
+
+model ProductToOrder {
+  id        String   @id @unique @default(uuid())
+  productID String
+  orderID   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  order     Order    @relation(fields: [orderID], references: [id])
+  product   Product  @relation(fields: [productID], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}

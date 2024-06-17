@@ -1,1 +1,1 @@
-export { default as component } from "../../../../src/routes/admin/auth/product/[[id]]/upsert/+page.svelte";
+export { default as component } from "../../../../src/routes/admin/auth/category/[[id]]/upsert/+page.svelte";

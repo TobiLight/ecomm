@@ -1,7 +1,9 @@
 import type * as Kit from '@sveltejs/kit';
 
 type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
-type RouteParams = {  }
+// @ts-ignore
+type MatcherParam<M> = M extends (param : string) => param is infer U ? U extends string ? U : string : string;
+type RouteParams = {  };
 type RouteId = '/admin/auth';
 type MaybeWithVoid<T> = {} extends T ? T | void : T;
 export type RequiredKeys<T> = { [K in keyof T]-?: {} extends { [P in K]: T[K] } ? never : K; }[keyof T];
@@ -9,7 +11,7 @@ type OutputDataShape<T> = MaybeWithVoid<Omit<App.PageData, RequiredKeys<T>> & Pa
 type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
 export type Snapshot<T = any> = Kit.Snapshot<T>;
-type LayoutRouteId = RouteId | "/admin/auth/admin/[[id]]/list" | "/admin/auth/admin/[[id]]/upsert" | "/admin/auth/category/[[id]]/list" | "/admin/auth/category/[[id]]/upsert" | "/admin/auth/dashboard" | "/admin/auth/logout" | "/admin/auth/product/[[id]]/list" | "/admin/auth/product/[[id]]/upsert"
+type LayoutRouteId = RouteId | "/admin/auth/admin/[[id]]/list" | "/admin/auth/admin/[[id]]/upsert" | "/admin/auth/admin/create" | "/admin/auth/category/[[id]]/list" | "/admin/auth/category/[[id]]/upsert" | "/admin/auth/category/create" | "/admin/auth/dashboard" | "/admin/auth/logout" | "/admin/auth/order/[[id]]/list" | "/admin/auth/order/[[id]]/upsert" | "/admin/auth/product/[[id]]/list" | "/admin/auth/product/[[id]]/upsert" | "/admin/auth/product/create"
 type LayoutParams = RouteParams & { id?: string }
 type LayoutServerParentData = EnsureDefined<import('../../$types.js').LayoutServerData>;
 type LayoutParentData = EnsureDefined<import('../../$types.js').LayoutData>;
