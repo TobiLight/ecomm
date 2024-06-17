@@ -71,7 +71,7 @@
 </script>
 
 <div class="relative">
-  <Navbar isLoggedIn={user ? true : false} />
+  <Navbar user={user} isLoggedIn={user ? true : false} />
 
   <Sidebar links={user?.role === 'USER' ? userLinks : links} />
 

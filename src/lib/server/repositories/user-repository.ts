@@ -86,14 +86,10 @@ export class UserRepository extends BaseRepository<'user'> {
     }
   }
 
-  async getMany(options?: { where?: Prisma.UserWhereInput; select?: Prisma.UserSelect; include?: unknown; order?: Prisma.UserOrderByWithRelationInput; skip?: number; take?: number }): Promise<{total: number, items: User[]}> {
+  async getMany(options?: { where?: Prisma.UserWhereInput; select?: Prisma.UserSelect; include?: unknown; order?: Prisma.UserOrderByWithRelationInput; skip?: number; take?: number }) {
     const { where, select, include, order, skip, take } = options || {};
-    let users= await this.prisma.user.findMany({ where, select, skip, take })
-
-    return {
-      total: users.length,
-      items: users
-    }
+    
+    return await this.prisma.user.findMany({ where, select, skip, take })
   }
 
   async destroy(id: string): Promise<User | null> {

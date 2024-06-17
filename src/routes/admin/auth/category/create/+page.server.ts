@@ -21,9 +21,10 @@ export const actions = {
     }
 
     const image = await uploadFile('image', formData, 'one');
+
     if (image) {
       form.data.image = image;
-    } 
+    }
 
     const repository = useRepository('category');
 

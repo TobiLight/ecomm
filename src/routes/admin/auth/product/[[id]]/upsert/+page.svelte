@@ -97,4 +97,8 @@
       }}
     />
   </div>
+  <div class="existing-image col-span-2 text-white">
+    <p>Current thumbnail:</p>
+    <img src={data.item?.image} alt="" class="w-14 h-14">
+  </div>
 </AppForm>

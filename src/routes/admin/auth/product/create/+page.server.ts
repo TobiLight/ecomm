@@ -21,16 +21,18 @@ export const actions = {
     const formData = await event.request.formData();
 
     const form = await superValidate(formData, upsertProductSchema);
+
     if (!form.valid) {
       return fail(400, { form });
     }
 
-    const image = await uploadFile('image', formData, 'one');
+    const image = await uploadFile('image', formData, 'one', 'kvk_products');
+    
     if (image) {
       form.data.image = image;
     }
 
-    await repository.create({ ...form.data, image: image });
+    await repository.create({ ...form.data, image: form.data.image as string });
 
     throw redirect(303, '/admin/auth/product/list');
   },

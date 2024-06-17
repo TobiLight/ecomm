@@ -1,11 +1,13 @@
 import { env } from 'node:process';
 import sharp, { type ResizeOptions, type Sharp } from 'sharp';
-// import { sThree } from './s-three';
+import { sThree } from './s-three';
 import { local } from './local';
+import { Cloudinary, cloudinaryService } from './cloudinary';
 
-let filesystem = local;
-// if (env.FILESYSTEM_DISK === 'S3') {
-//   filesystem = sThree;
+let filesystem = cloudinaryService;
+
+// if (env.FILESYSTEM_DISK === 'CLOUDINARY') {
+//   filesystem = cloudinaryService;
 // }
 
 const resizes: Record<'product' | 'category', ResizeOptions> = {
@@ -32,7 +34,7 @@ export async function uploadSharp<T extends keyof typeof resizes>(
   }
   const link = await filesystem.store(
     file.webp(),
-    `${crypto.randomUUID()}.webp`,
+    // `${crypto.randomUUID()}.webp`,
   );
   return link || '';
 }
@@ -40,7 +42,7 @@ export async function uploadSharp<T extends keyof typeof resizes>(
 export async function uploadFile<
   T extends string,
   TType extends 'one' | 'many',
->(name: T, formData: FormData, type: TType) {
+>(name: T, formData: FormData, type: TType, folder: string | undefined = "kvk_categories") {
   const files = getFiles(formData, name);
 
   if (files.length === 0) {
@@ -50,9 +52,11 @@ export async function uploadFile<
   const links: string[] = [];
   for await (const file of files) {
     const { file: optimizedFile, name } = await optimizeFile(file);
-    const link = await filesystem.store(optimizedFile, name);
+
+    const link = await filesystem.store(file, file.name, folder);
+
     if (link) {
-      links.push(link);
+      links.push(link.secure_url);
     }
   }
 
@@ -74,7 +78,7 @@ export function deleteFile(key?: string | null) {
 function getFiles(formData: FormData, name: string) {
   return formData
     .getAll(name)
-    .filter((x) => x instanceof File && x.size > 0) as File[];
+    .filter((x) => x instanceof File && x.size > 0 ) as File[];
 }
 
 async function optimizeFile(file: File) {

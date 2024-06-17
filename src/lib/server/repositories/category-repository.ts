@@ -43,7 +43,11 @@ export class CategoryRepository extends BaseRepository<'Category'> {
     const { where, select, include, order, skip, take } = options || {};
     return await this.prisma.category.findMany({
       where,
-      orderBy: order,
+      orderBy: [
+        {
+          createdAt: "asc"
+        }
+      ],
       select,
       skip,
       take,
