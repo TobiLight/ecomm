@@ -33,7 +33,7 @@
         >
           Details
         </dt>
-        <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
+        <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400 whitespace-pre-wrap">
           {product.description}
         </dd>
       </dl>
