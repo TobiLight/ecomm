@@ -20,10 +20,6 @@
 		"src/routes/admin/auth/admin/[[id]]/upsert/+page.server.ts",
 		"src/routes/admin/auth/+layout.server.ts"
 	],
-	"/admin/auth/category/create": [
-		"src/routes/admin/auth/category/create/+page.server.ts",
-		"src/routes/admin/auth/+layout.server.ts"
-	],
 	"/admin/auth/category/[[id]]/list": [
 		"src/routes/admin/auth/category/[[id]]/list/+page.server.ts",
 		"src/routes/admin/auth/+layout.server.ts"
