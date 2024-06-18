@@ -92,21 +92,7 @@
             <button
               class="hover:bg-gray-100 px-3 py-2 cursor-pointer border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 w-full text-left"
               on:click={() => {
-                setShowSelected();
-
-                if (filterCategoriesArr.some((cat) => category.id === cat.id)) {
-                  console.warn(
-                    'Category with ID',
-                    category.id,
-                    'already exists or does not exist in the fetched categories.',
-                  );
-                  searchQuery = '';
-                  console.log('categories', filterCategoriesArr);
-                  return;
-                }
-                // selectCategory(category);
                 setCategoriesArr(category);
-                tempCategory = category;
                 searchQuery = '';
               }}
             >
