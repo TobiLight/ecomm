@@ -176,7 +176,6 @@ export class ProductRepository extends BaseRepository<'Product'> {
     categories: Array<string | undefined> = [],
   ) {
     if (categories && categories.length) {
-      console.log(categories);
       return await this.prisma.product.update({
         where: { id: data.id },
         data: {
@@ -191,21 +190,7 @@ export class ProductRepository extends BaseRepository<'Product'> {
         },
       });
     }
-    // if (categories && categories.length > 0) {
-    //   console.log('data', categories);
-    //   categories.slice(0, 1).map(async (category) => {
-    //     data.categoryId = category as string;
-    //     console.log(data);
-    //     await this.prisma.product.update({ where: { id: data.id }, data });
-    //   });
-
-    //   console.log(categories[0], data);
-    //   data.categoryId = categories[0];
-    //   return await this.prisma.product.update({
-    //     where: { id: data.id },
-    //     data,
-    //   });
-    // }
+    
     return await this.prisma.product.update({ where: { id: data.id }, data });
   }
 }

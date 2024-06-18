@@ -2,9 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { upsertProductSchema } from '$lib/server/validation';
 import { useRepository } from '$lib/server/repositories';
-import { throwIfNotFound } from '$lib/utils';
-import { deleteFile, uploadFile } from '$lib/server/filesystem';
-import { Prisma } from '@prisma/client';
+import { uploadFile } from '$lib/server/filesystem';
 
 const repository = useRepository('product');
 const categoryRepository = useRepository('category');

@@ -41,7 +41,6 @@
     filteredCategoriesArr.push(category);
   }
 
-  $: console.log('data', data);
 </script>
 
 <AppForm
@@ -76,11 +75,6 @@
                 class="hover:bg-gray-100 px-3 py-2 cursor-pointer border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 w-full text-left"
                 on:click={() => {
                   if (filteredCategoriesArr.some((categ) => categ.id === category.id)) {
-                    console.warn(
-                      'Category with ID',
-                      category.id,
-                      'already exists or does not exist in the fetched categories.',
-                    );
                     searchQuery = '';
                     return; // Prevent adding duplicate or non-existent category
                   }

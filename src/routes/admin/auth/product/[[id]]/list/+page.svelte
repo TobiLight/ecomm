@@ -15,7 +15,7 @@
   {totalPages}
   {name}
   columns={['Name', 'Price', 'Quantity', 'Categories', 'Image']}
-  dummy
+  dummy={false}
 >
   {#each items as item}
     <AppRow
