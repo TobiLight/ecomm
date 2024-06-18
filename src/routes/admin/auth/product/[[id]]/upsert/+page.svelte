@@ -58,12 +58,9 @@
       filterCategoriesArr.push(category);
     }
 
-    console.log('doneee', filterCategoriesArr);
   }
 
   let tempCategory: { id: string; name: string };
-
-  $: console.log($categoriesArr);
 </script>
 
 <AppForm
