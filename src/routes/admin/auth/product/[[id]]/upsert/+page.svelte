@@ -107,7 +107,7 @@
                   console.log('categories', filterCategoriesArr);
                   return;
                 }
-                selectCategory(category);
+                // selectCategory(category);
                 setCategoriesArr(category);
                 tempCategory = category;
                 searchQuery = '';
