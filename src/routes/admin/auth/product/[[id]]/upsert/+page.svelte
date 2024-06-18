@@ -7,7 +7,12 @@
   import AppFileInput from '$lib/components/AppFileInput.svelte';
   import { page } from '$app/stores';
   import AppSelect from '$lib/components/AppSelect.svelte';
-    import { showSelected, setShowSelected, setCategoriesArr, categoriesArr } from '../../../../../../store/store.js';
+  import {
+    showSelected,
+    setShowSelected,
+    setCategoriesArr,
+    categoriesArr,
+  } from '../../../../../../store/store.js';
 
   export let data;
 
@@ -52,13 +57,12 @@
       filterCategoriesArr.push(category);
     }
 
-    console.log("doneee",filterCategoriesArr)
+    console.log('doneee', filterCategoriesArr);
   }
 
   let tempCategory: { id: string; name: string };
 
-  $: console.log($categoriesArr)
-
+  $: console.log($categoriesArr);
 </script>
 
 <AppForm
@@ -90,8 +94,8 @@
             <button
               class="hover:bg-gray-100 px-3 py-2 cursor-pointer border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 w-full text-left"
               on:click={() => {
-                setShowSelected()
-                
+                setShowSelected();
+
                 if (filterCategoriesArr.some((cat) => category.id === cat.id)) {
                   console.warn(
                     'Category with ID',
@@ -103,7 +107,7 @@
                   return;
                 }
                 selectCategory(category);
-                setCategoriesArr(category)
+                setCategoriesArr(category);
                 tempCategory = category;
                 searchQuery = '';
               }}
@@ -126,10 +130,10 @@
           <ul>
             <p for="categoryId" class="mr-2 text-gray-600 dark:text-white">Selected:</p>
             {#each $categoriesArr as categorySelected}
-            <div class="flex items-center">
-              <li class="ml-4">{categorySelected.name}</li>
-              <button>x</button>
-            </div>
+              <div class="flex items-center gap-2">
+                <li class="ml-4">{categorySelected.name}</li>
+                <button class="bg grid h-fit px-2 rounded bg-red-500 font-bold">x</button>
+              </div>
               <input type="hidden" name="categoryId" value={categorySelected.id} />
             {/each}
           </ul>
