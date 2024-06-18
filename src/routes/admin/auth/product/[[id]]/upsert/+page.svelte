@@ -23,7 +23,6 @@
   });
 
   let searchQuery = '';
-  let selectedCategoryId: string | null = null;
 
   function handleSearch(
     event: Event & {
@@ -31,7 +30,6 @@
     },
   ) {
     searchQuery = event.currentTarget.value;
-    // selectedCategoryId = null;
   }
 
   const filteredCategories = (searchQuery: string) =>
@@ -40,7 +38,6 @@
           category.name.toLowerCase().includes(searchQuery.toLowerCase()),
         )
       : data.categories;
-
 </script>
 
 <AppForm
@@ -96,7 +93,10 @@
             {#each $categoriesArr as categorySelected}
               <div class="flex items-center gap-2">
                 <li class="ml-4">{categorySelected.name}</li>
-                <button on:click={removeCategory(categorySelected.id)} class="bg grid h-fit px-2 rounded bg-red-500 font-bold">x</button>
+                <button
+                  on:click={removeCategory(categorySelected.id)}
+                  class="bg grid h-fit px-2 rounded bg-red-500 font-bold">x</button
+                >
               </div>
               <input type="hidden" name="categoryId" value={categorySelected.id} />
             {/each}
