@@ -126,7 +126,10 @@
           <ul>
             <p for="categoryId" class="mr-2 text-gray-600 dark:text-white">Selected:</p>
             {#each $categoriesArr as categorySelected}
-              <button class="ml-4">{categorySelected.name}</button>
+            <div class="flex items-center">
+              <li class="ml-4">{categorySelected.name}</li>
+              <button>x</button>
+            </div>
               <input type="hidden" name="categoryId" value={categorySelected.id} />
             {/each}
           </ul>
