@@ -11,7 +11,7 @@ type OutputDataShape<T> = MaybeWithVoid<Omit<App.PageData, RequiredKeys<T>> & Pa
 type EnsureDefined<T> = T extends null | undefined ? {} : T;
 type OptionalUnion<U extends Record<string, any>, A extends keyof U = U extends U ? keyof U : never> = U extends unknown ? { [P in Exclude<A, keyof U>]?: never } & U : never;
 export type Snapshot<T = any> = Kit.Snapshot<T>;
-type LayoutRouteId = RouteId | "/(guest)" | "/(guest)/cart" | "/(guest)/checkout" | "/(guest)/product" | "/(guest)/product/[id]" | "/admin/auth/admin/[[id]]/list" | "/admin/auth/admin/[[id]]/upsert" | "/admin/auth/admin/create" | "/admin/auth/category/[[id]]/list" | "/admin/auth/category/[[id]]/upsert" | "/admin/auth/dashboard" | "/admin/auth/logout" | "/admin/auth/order/[[id]]/list" | "/admin/auth/order/[[id]]/upsert" | "/admin/auth/product/[[id]]/list" | "/admin/auth/product/[[id]]/upsert" | "/admin/auth/product/create" | "/admin/guest/login" | "/admin/guest/register" | "/admin/super/register" | null
+type LayoutRouteId = RouteId | "/(guest)" | "/(guest)/cart" | "/(guest)/checkout" | "/(guest)/product" | "/(guest)/product/[id]" | "/admin/auth/admin/[[id]]/list" | "/admin/auth/admin/[[id]]/upsert" | "/admin/auth/admin/create" | "/admin/auth/category/[[id]]/list" | "/admin/auth/category/[[id]]/upsert" | "/admin/auth/category/create" | "/admin/auth/dashboard" | "/admin/auth/logout" | "/admin/auth/order/[[id]]/list" | "/admin/auth/order/[[id]]/upsert" | "/admin/auth/product/[[id]]/list" | "/admin/auth/product/[[id]]/upsert" | "/admin/auth/product/create" | "/admin/guest/login" | "/admin/guest/register" | "/admin/super/register" | null
 type LayoutParams = RouteParams & { id?: string }
 type LayoutParentData = EnsureDefined<{}>;
 
