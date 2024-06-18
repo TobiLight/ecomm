@@ -39,7 +39,7 @@ export const loginSchema = object({
 export const upsertProductSchema = object({
   id: string().optional(),
   name: string().min(1).max(256).trim(),
-  description: string().min(1).max(256).trim(),
+  description: string().min(1).max(2048).trim(),
   image: custom(),
   categories: array(string()).optional(),
   price: coerce

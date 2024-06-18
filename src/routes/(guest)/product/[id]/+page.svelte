@@ -13,7 +13,7 @@
   <div
     class="grid grid-cols-1 md:grid-cols-2 rounded-lg py-8 sm:px-16 mx-auto max-w-screen-lg lg:py-16 bg-white dark:bg-gray-800 px-4 gap-5"
   >
-    <div class="flex justify-center">
+    <div class="flex justify-center h-fit">
       <img width="320" height="288" src={product.image} alt={product.name} />
     </div>
     <div>
