@@ -7,6 +7,7 @@
   import AppFileInput from '$lib/components/AppFileInput.svelte';
   import { page } from '$app/stores';
   import AppSelect from '$lib/components/AppSelect.svelte';
+    import { showSelected, setShowSelected } from '../../../../../../store/store.js';
 
   export let data;
 
@@ -23,8 +24,8 @@
       currentTarget: EventTarget & HTMLInputElement;
     },
   ) {
-    selectedCategoryId = null;
-    searchQuery = event.currentTarget.value; // Lowercase for case-insensitive search
+    searchQuery = event.currentTarget.value;
+    // selectedCategoryId = null;
   }
 
   const filteredCategories = (searchQuery: string) =>
@@ -37,29 +38,27 @@
   const filterCategoriesArr: Array<{
     id: string;
     name: string;
-    image: string;
-    createdAt: Date;
-    updatedAt: Date;
   }> = [];
 
-  let fil = filteredCategories(searchQuery);
+  // let fil = filteredCategories(searchQuery);
 
-  function selectCategory(category: {
-    id: string;
-    name: string;
-    image: string;
-    createdAt: Date;
-    updatedAt: Date;
-  }) {
-    selectedCategoryId = category.id;
-    filterCategoriesArr.push(category);
+  function selectCategory(category: { id: string; name: string }) {
+    // selectedCategoryId = category.id;
+    let existingCat = new Set(filterCategoriesArr);
+
+    if (existingCat.has(category)) {
+      return;
+    } else {
+      filterCategoriesArr.push(category);
+    }
+
+    console.log("doneee",filterCategoriesArr)
   }
 
-  let tempCategory: { id: string; name: string; image: string; createdAt: Date; updatedAt: Date };
+  let tempCategory: { id: string; name: string };
 
-  $: fil = filteredCategories(searchQuery);
-  $: console.log('s', tempCategory);
-  // $: tempCategory ? filterCategoriesArr.push(tempCategory) : undefined
+  $: filterCategoriesArr
+
 </script>
 
 <AppForm
@@ -83,15 +82,16 @@
       />
 
       {#if searchQuery}
-        <ul
-          class="top-0 left-0 w-full overflow-y-auto bg-white rounded-md shadow-md mt-1 z-10"
+        <div
+          class="top-0 left-0 w-full overflow-y-auto dark:bg-gray-700 bg-white rounded-md shadow-md mt-1 z-10"
           style="max-height: 200px;"
         >
-          {#each fil as category}
-            <li
-              class="hover:bg-gray-100 px-3 py-2 cursor-pointer border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+          {#each filteredCategories(searchQuery) as category}
+            <button
+              class="hover:bg-gray-100 px-3 py-2 cursor-pointer border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 w-full text-left"
               on:click={() => {
-                selectedCategoryId = null;
+                setShowSelected()
+                
                 if (filterCategoriesArr.some((cat) => category.id === cat.id)) {
                   console.warn(
                     'Category with ID',
@@ -99,10 +99,8 @@
                     'already exists or does not exist in the fetched categories.',
                   );
                   searchQuery = '';
-                  selectedCategoryId = category.id
-
-
-                  return; // Prevent adding duplicate or non-existent category
+                  console.log('categories', filterCategoriesArr);
+                  return;
                 }
                 selectCategory(category);
                 tempCategory = category;
@@ -110,29 +108,31 @@
               }}
             >
               {category.name}
-            </li>
+            </button>
           {/each}
           {#if !filteredCategories(searchQuery).length && searchQuery.length > 0}
-            <li
+            <p
               class="px-3 py-2 border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
             >
               No matches found
-            </li>
+            </p>
           {/if}
-        </ul>
+        </div>
       {/if}
 
-      {#if selectedCategoryId}
+      {#if $showSelected}
         <div class="flex flex-col mt-2">
-          <label class="mr-2 text-gray-600 dark:text-white">Selected:</label>
           <ul>
+            <p for="categoryId" class="mr-2 text-gray-600 dark:text-white">Selected:</p>
             {#each filterCategoriesArr as categorySelected}
-              <li class="ml-4">{categorySelected.name}</li>
+              <button class="ml-4">{categorySelected.name}</button>
+              <input type="hidden" name="categoryId" value={categorySelected.id} />
             {/each}
           </ul>
         </div>
       {/if}
     </label>
+
     <!-- <AppSelect
       input={{
         name: 'categoryId',

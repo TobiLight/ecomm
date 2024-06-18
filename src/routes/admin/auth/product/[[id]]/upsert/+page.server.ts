@@ -27,12 +27,16 @@ export const actions = {
     const formData = await event.request.formData();
 
     const id = event.params.id;
-    
+
     if (id) {
       formData.append('id', String(id));
     }
 
     const form = await superValidate(formData, upsertProductSchema);
+
+    let categoryIDS = Array.from(
+      new Set(formData.getAll('categoryId')),
+    ) as Array<string>;
 
     if (!form.valid) {
       return fail(400, { form });
@@ -53,6 +57,10 @@ export const actions = {
         await deleteFile(image);
       }
 
+      if (categoryIDS.length > 0) {
+        console.log(categoryIDS);
+        return {};
+      }
       throwIfNotFound(await repository.update(form.data));
     }
 

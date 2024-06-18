@@ -1,4 +1,4 @@
-import { readable } from 'svelte/store';
+import { readable, type Writable, writable } from 'svelte/store';
 
 export const navigating = readable(false, (set) => {
     // Make sure that window exists
@@ -23,3 +23,15 @@ export const navigating = readable(false, (set) => {
     window.addEventListener('beforeunload', navigatingStarted);
     return () => window.removeEventListener('beforeunload', navigatingStarted);
 });
+
+export let showSelected: Writable<boolean> = writable<boolean>(false)
+
+export let categoriesArr:Writable<Array<{id: string, name: string}>> = writable<Array<{id: string, name: string}>>([])
+
+export function setShowSelected() {
+    showSelected.update(val => val = true)
+}
+
+export function setCategoriesArr(category: {id: string, name: string}) {
+    categoriesArr.update(cat => [...cat, {...category}])
+}
