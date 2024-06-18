@@ -35,3 +35,7 @@ export function setShowSelected() {
 export function setCategoriesArr(category: {id: string, name: string}) {
     categoriesArr.update(cat => [...cat, {...category}])
 }
+
+export function removeCategory(categoryId: string) {
+    categoriesArr.update((category) => )
+}
