@@ -4,6 +4,7 @@ import { upsertProductSchema } from '$lib/server/validation';
 import { useRepository } from '$lib/server/repositories';
 import { throwIfNotFound } from '$lib/utils';
 import { deleteFile, uploadFile } from '$lib/server/filesystem';
+import { Prisma } from '@prisma/client';
 
 const repository = useRepository('product');
 const categoryRepository = useRepository('category');
@@ -32,7 +33,11 @@ export const actions = {
       form.data.image = image;
     }
 
-    await repository.create({ ...form.data, image: form.data.image as string });
+    let categoryIDS = Array.from(
+      new Set(formData.getAll('categoryId')),
+    ) as Array<string>;
+
+    await repository.create({ ...form.data, image: form.data.image as string, categories: categoryIDS });
 
     throw redirect(303, '/admin/auth/product/list');
   },

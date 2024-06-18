@@ -4,6 +4,7 @@ import {
   Prisma,
   PrismaClient,
   Product,
+  ProductCategories,
   ProductToOrder,
   User,
 } from '@prisma/client';
@@ -14,6 +15,7 @@ interface PrismaModelMapping {
   Product: Product;
   Order: Order;
   ProductToOrder: ProductToOrder;
+  ProductCategories: ProductCategories
 }
 
 export type ModelTypes = {
@@ -30,6 +32,7 @@ export type ModelTypes = {
     // @ts-ignore
     Return: Prisma.UserGetPayload;
   };
+
   Product: {
     Where: Prisma.ProductWhereInput;
     Select: Prisma.ProductSelect;
@@ -89,6 +92,24 @@ export type ModelTypes = {
     // @ts-ignore
     Return: Prisma.ProductToOrderGetPayload;
   };
+
+  // ProductCategories: {
+  //   Where: Prisma.ProductCategoriesWhereInput;
+  //   Select: Prisma.ProductCategoriesSelect;
+  //   Include: unknown;
+  //   Create:
+  //     | Prisma.ProductCategoriesCreateInput
+  //     | Prisma.ProductCategoriesUncheckedCreateInput;
+  //   Update:
+  //     | Prisma.ProductCategoriesUpdateInput
+  //     | Prisma.ProductCategoriesUncheckedUpdateInput;
+  //   Cursor: Prisma.ProductCategoriesWhereUniqueInput;
+  //   Order: Prisma.ProductCategoriesOrderByWithRelationInput;
+  //   Delegate: Prisma.ProductCategoriesDelegate;
+  //   GroupBy: Prisma.ProductCategoriesGroupByOutputType;
+  //   // @ts-ignore
+  //   Return: Prisma.ProductCategoriesGetPayload;
+  // };
 };
 
 export abstract class BaseRepository<T extends keyof PrismaModelMapping> {
@@ -108,7 +129,7 @@ export abstract class BaseRepository<T extends keyof PrismaModelMapping> {
   }
 
   async create(
-    data: PrismaModelMapping[T], total?: number
+    data: PrismaModelMapping[T]
   ): Promise<PrismaModelMapping[T] | null> {
     // @ts-ignore
     return await this.prisma[this.modelName].create({ data });

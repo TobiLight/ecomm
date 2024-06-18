@@ -1,5 +1,4 @@
 import * as z from "zod"
-import * as imports from "../../src/zod-schemas"
 import { CompleteProductToOrder, RelatedProductToOrderModel } from "./index"
 
 export const OrderModel = z.object({

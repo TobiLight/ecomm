@@ -7,6 +7,7 @@
   import AppFileInput from '$lib/components/AppFileInput.svelte';
   import { page } from '$app/stores';
   import AppSelect from '$lib/components/AppSelect.svelte';
+    import { categoriesArr, setCategoriesArr, removeCategory } from '../../../../../store/store';
 
   export let data;
 
@@ -15,7 +16,32 @@
     taintedMessage: null,
   });
 
-  $: console.log("data", data)
+  let categories = data.categories as Array<{ id: string; name: string }>;
+
+  let searchQuery = '';
+
+  function handleSearch(
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+  ) {
+    searchQuery = event.currentTarget.value;
+  }
+
+  const filteredCategories = (searchQuery: string) =>
+    searchQuery
+      ? categories.filter((category) =>
+          category.name.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
+      : categories;
+
+  let filteredCategoriesArr: Array<{ id: string; name: string }> = [];
+
+  function selectCategory(category: { id: string; name: string }) {
+    filteredCategoriesArr.push(category);
+  }
+
+  $: console.log('data', data);
 </script>
 
 <AppForm
@@ -23,10 +49,101 @@
   enctype="multipart/form-data"
   name={{ singular: 'product' }}
   submitting={$submitting}
-  actionType={"Add a new"}
+  actionType={'Add a new'}
 >
   <div class="sm:col-span-2">
-    <AppSelect
+    <div class="sm:col-span-2 relative">
+      <label for="categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        Select category
+        <input
+          bind:value={searchQuery}
+          on:input={handleSearch}
+          type="text"
+          name="categories"
+          id="categories"
+          placeholder="Enter category name"
+          class="focus:outline-none mt-2 block w-full rounded-lg border p-2.5 text-sm focus:border-primary-600 focus:ring-primary-600 dark:focus:border-primary-500 dark:focus:ring-primary-500 border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+        />
+
+        {#if searchQuery}
+          <div
+            class="top-0 left-0 w-full overflow-y-auto dark:bg-gray-700 bg-white rounded-md shadow-md mt-1 z-10"
+            style="max-height: 200px;"
+          >
+            {#each filteredCategories(searchQuery) as category}
+              <button
+                type="button"
+                class="hover:bg-gray-100 px-3 py-2 cursor-pointer border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 w-full text-left"
+                on:click={() => {
+                  if (filteredCategoriesArr.some((categ) => categ.id === category.id)) {
+                    console.warn(
+                      'Category with ID',
+                      category.id,
+                      'already exists or does not exist in the fetched categories.',
+                    );
+                    searchQuery = '';
+                    return; // Prevent adding duplicate or non-existent category
+                  }
+
+                  setCategoriesArr(category);
+                  selectCategory(category);
+                  searchQuery = '';
+                }}
+              >
+                {category.name}
+              </button>
+            {/each}
+            {#if !filteredCategories(searchQuery).length && searchQuery.length > 0}
+              <p
+                class="px-3 py-2 border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              >
+                No matches found
+              </p>
+            {/if}
+          </div>
+        {/if}
+
+        {#if $categoriesArr.length > 0}
+          <div class="flex flex-col mt-2">
+            <ul>
+              <p for="categoryId" class="mr-2 text-gray-600 dark:text-white">Selected:</p>
+              <div class="flex items-center">
+                {#each $categoriesArr as categorySelected}
+                  <div class="flex items-center gap-1">
+                    <li class="ml-2">{categorySelected.name}</li>
+                    <button
+                      type="button"
+                      on:click={() => {
+                        filteredCategoriesArr = filteredCategoriesArr.filter(
+                          (categ) => categ.id !== categorySelected.id,
+                        );
+                        removeCategory(categorySelected.id);
+                      }}
+                      class="bg grid h-fit px-2 rounded bg-red-500 font-bold">x</button
+                    >
+                    <input type="hidden" name="categoryId" value={categorySelected.id} />
+                  </div>
+                {/each}
+              </div>
+            </ul>
+          </div>
+        {/if}
+      </label>
+
+      <!-- <AppSelect
+        input={{
+          name: 'categoryId',
+          as: 'category',
+          errors: $errors.categoryId,
+          value: data.item?.categoryId,
+        }}
+        bind:value={$form.categoryId}
+        options={data.categories}
+        valueKey="id"
+        textKey="name"
+      /> -->
+    </div>
+    <!-- <AppSelect
       input={{
         name: 'categoryId',
         as: 'category',
@@ -37,7 +154,7 @@
       options={data.categories}
       valueKey="id"
       textKey="name"
-    />
+    /> -->
   </div>
   <div class="sm:col-span-2">
     <AppInput

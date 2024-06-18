@@ -58,10 +58,32 @@ export const actions = {
       }
 
       if (categoryIDS.length > 0) {
-        console.log(categoryIDS);
-        return {};
+        throwIfNotFound(
+          await repository.update(
+            {
+              id: form.data.id as string,
+              image: form.data.image as string,
+              ...form.data,
+            },
+            categoryIDS,
+          ),
+        );
+      } else {
+        if (form.data.image) {
+          throwIfNotFound(
+            await repository.update(
+              {
+                id: form.data.id as string,
+                image: form.data.image,
+                ...form.data,
+              },
+              [],
+            ),
+          );
+        } else {
+          throwIfNotFound(await repository.update(form.data, []));
+        }
       }
-      throwIfNotFound(await repository.update(form.data));
     }
 
     throw redirect(303, '/admin/auth/product/list');

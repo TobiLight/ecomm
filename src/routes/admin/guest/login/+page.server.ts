@@ -5,7 +5,6 @@ import { useRepository } from '$lib/server/repositories';
 import { hash } from '$lib/authentication/hash';
 import { jwt } from '$lib/authentication/jwt';
 import { setToken } from '$admin/utils';
-import { setFlash } from 'sveltekit-flash-message/server';
 
 export async function load(event) {
   const form = await superValidate(loginSchema);

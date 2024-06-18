@@ -1,5 +1,4 @@
 import * as z from "zod"
-import * as imports from "../../src/zod-schemas"
 import { Role } from "@prisma/client"
 
 export const UserModel = z.object({

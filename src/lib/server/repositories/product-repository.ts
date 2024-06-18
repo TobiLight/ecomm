@@ -8,36 +8,76 @@ export class ProductRepository extends BaseRepository<'Product'> {
     super(prisma, 'Product');
   }
 
-  async create(
-    data: Prisma.ProductCreateInput | Prisma.ProductUncheckedCreateInput,
-  ): Promise<Product | null> {
+  async create(data: {
+    name: string;
+    description: string;
+    image: string;
+    price: number;
+    quantity: number;
+    categories?: Array<string>;
+  }): Promise<{
+    id: string;
+    name: string;
+    description: string;
+    image: string;
+    price: number;
+    quantity: number;
+    categories: Category[] | undefined;
+    createdAt: Date;
+    updatedAt: Date;
+  } | null> {
+    if (data.categories && data.categories.length) {
+      return await this.prisma.product.create({
+        data: {
+          ...data,
+          categories: {
+            connect: data.categories.map((category) => {
+              return {
+                id: category,
+              };
+            }),
+          },
+          id: uuid4(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        include: {
+          categories: true,
+        },
+      });
+    }
+
     return await this.prisma.product.create({
       data: {
         ...data,
+        categories: undefined,
         id: uuid4(),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-    });
-  }
-
-  async createMany(
-    data: Pick<
-      Prisma.ProductCreateManyInput,
-      'name' | 'description' | 'image' | 'price' | 'quantity' | 'categoryId'
-    >[],
-  ): Promise<Array<Product & { category: Pick<Category, 'name'> }> | []> {
-    return await this.prisma.product.createManyAndReturn({
-      data: [...data],
       include: {
-        category: {
-          select: {
-            name: true,
-          },
-        },
+        categories: true,
       },
     });
   }
+
+  // async createMany(
+  //   data: Pick<
+  //     Prisma.ProductCreateManyInput,
+  //     'name' | 'description' | 'image' | 'price' | 'quantity' | 'categoryId'
+  //   >[],
+  // ): Promise<Array<Product & { categories: Array<Pick<Category, 'name'>> }> | []> {
+  //   return await this.prisma.product.createManyAndReturn({
+  //     data: [...data],
+  //     include: {
+  //       categories: {
+  //         select: {
+  //           categoryName: true,
+  //         },
+  //       },
+  //     },
+  //   });
+  // }
 
   async getManyWithCategory(
     args: {
@@ -46,43 +86,60 @@ export class ProductRepository extends BaseRepository<'Product'> {
     },
     filter?: { name?: string; categoryID?: string },
   ): Promise<
-    Array<Product & { category: Pick<Category, 'id' | 'name'> }> | []
+    | Array<
+        Product & {
+          categories: Array<Pick<Category, 'id' | 'name'>>;
+        }
+      >
+    | []
   > {
-    if (filter && Object.entries(filter).length < 2) {
-      return [];
-    }
     if (filter && Object.entries(filter).length > 0) {
+      if (filter.categoryID) {
+        return await this.prisma.product.findMany({
+          where: {
+            categories: {
+              some: {
+                id: filter.categoryID,
+              },
+            },
+          },
+          include: {
+            categories: true,
+          },
+        });
+      }
+
       return await this.prisma.product.findMany({
-        where: { categoryId: filter.categoryID },
-        include: {
-          category: {
-            select: {
-              id: true,
-              name: true,
+        where: {
+          categories: {
+            some: {
+              id: filter.categoryID,
+              name: filter.name,
             },
           },
         },
+        include: {
+          categories: true,
+        },
       });
     }
+
     return await this.prisma.product.findMany({
       include: {
-        category: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
+        categories: true,
       },
     });
   }
 
   async getOne(
     id: string,
-  ): Promise<(Product & { category: Pick<Category, 'id' | 'name'> }) | null> {
+  ): Promise<
+    (Product & { categories: Array<Pick<Category, 'id' | 'name'>> }) | null
+  > {
     return await this.prisma.product.findFirst({
       where: { id },
       include: {
-        category: {
+        categories: {
           select: {
             id: true,
             name: true,
@@ -112,5 +169,43 @@ export class ProductRepository extends BaseRepository<'Product'> {
 
   async deleteOne(id: string): Promise<Product> {
     return await this.prisma.product.delete({ where: { id: id } });
+  }
+
+  async update(
+    data: Partial<Product>,
+    categories: Array<string | undefined> = [],
+  ) {
+    if (categories && categories.length) {
+      console.log(categories);
+      return await this.prisma.product.update({
+        where: { id: data.id },
+        data: {
+          ...data,
+          categories: {
+            connect: categories.map((category) => {
+              return {
+                id: category,
+              };
+            }),
+          },
+        },
+      });
+    }
+    // if (categories && categories.length > 0) {
+    //   console.log('data', categories);
+    //   categories.slice(0, 1).map(async (category) => {
+    //     data.categoryId = category as string;
+    //     console.log(data);
+    //     await this.prisma.product.update({ where: { id: data.id }, data });
+    //   });
+
+    //   console.log(categories[0], data);
+    //   data.categoryId = categories[0];
+    //   return await this.prisma.product.update({
+    //     where: { id: data.id },
+    //     data,
+    //   });
+    // }
+    return await this.prisma.product.update({ where: { id: data.id }, data });
   }
 }

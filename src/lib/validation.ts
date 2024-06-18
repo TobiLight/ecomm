@@ -1,4 +1,4 @@
-import { coerce, custom, object, string, z } from 'zod';
+import { array, coerce, custom, object, string, z } from 'zod';
 
 export const upsertAdminSchema = object({
   id: coerce.number().optional(),
@@ -19,16 +19,21 @@ export const userSchema = object({
     .max(256)
     .trim(),
   password: string({
-    required_error: "Password field is required",
-  }).min(6, "Password must be at least 6 characters").max(256).trim(),
-  role: z.enum(["user", "admin"]).default("user")
+    required_error: 'Password field is required',
+  })
+    .min(6, 'Password must be at least 6 characters')
+    .max(256)
+    .trim(),
+  role: z.enum(['user', 'admin']).default('user'),
 });
 
 export const loginSchema = object({
   email: string().email().min(1).max(256).trim(),
   password: string({
-    required_error: "Password field is required",
-  }).max(256).trim(),
+    required_error: 'Password field is required',
+  })
+    .max(256)
+    .trim(),
 });
 
 export const upsertProductSchema = object({
@@ -36,8 +41,7 @@ export const upsertProductSchema = object({
   name: string().min(1).max(256).trim(),
   description: string().min(1).max(256).trim(),
   image: custom(),
-  categoryId: string({required_error: "Required"}),
-  categories: string().optional(),
+  categories: array(string()).optional(),
   price: coerce
     .number()
     .positive()
@@ -69,9 +73,7 @@ export const updateCartSchema = object({
     .default('' as unknown as number)
     .array()
     .min(1),
-  product: string()
-    .array()
-    .min(1),
+  product: string().array().min(1),
 });
 
 export const createOrderSchema = object({

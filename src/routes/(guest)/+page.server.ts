@@ -21,8 +21,11 @@ export async function load(event) {
 
   const getProducts = async () => {
     const repository = useRepository('product');
+    
     const params = formatListParams(event);
+    
     let _id = (await getCategories()).length > 0 ? (await getCategories())[0].id : "";
+
     const items = await repository.getManyWithCategory(params, {
       name: filters.name ?? 'All',
       categoryID: filters.categoryID ?? _id,

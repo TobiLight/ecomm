@@ -33,30 +33,39 @@ model User {
 
 model Category {
   /// @zod.uuid()
-  id        String    @id @unique @default(uuid())
+  id        String              @id @unique @default(uuid())
   /// @zod.max(255, { message: "The title must be shorter than 256 characters" })
   name      String
   image     String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @default(now())
   products  Product[]
 }
 
 model Product {
   /// @zod.uuid()
-  id          String           @id @unique @default(uuid())
+  id          String              @id @unique @default(uuid())
   /// @zod.max(255, { message: "The title must be shorter than 256 characters" })
   name        String
   description String
-  createdAt   DateTime         @default(now())
+  createdAt   DateTime            @default(now())
   image       String
   price       Float
   quantity    Int
-  updatedAt   DateTime         @default(now())
-  categoryId  String
-  category    Category         @relation(fields: [categoryId], references: [id])
+  updatedAt   DateTime            @default(now())
+  categories  Category[]
   orders      ProductToOrder[]
 }
+
+// model ProductCategories {
+//   productID String
+//   product   Product @relation(fields: [productID], references: [id])
+
+//   categoryID String
+//   category   Category @relation(fields: [categoryID], references: [id])
+
+//   @@unique([productID, categoryID])
+// }
 
 model Order {
   id        String           @id @unique @default(uuid())

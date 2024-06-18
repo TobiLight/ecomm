@@ -37,5 +37,5 @@ export function setCategoriesArr(category: {id: string, name: string}) {
 }
 
 export function removeCategory(categoryId: string) {
-    categoriesArr.update((category) => category.filter((cat) => cat.id !== categoryId))
+    return categoriesArr.update((category) => category.filter((cat) => cat.id !== categoryId))
 }

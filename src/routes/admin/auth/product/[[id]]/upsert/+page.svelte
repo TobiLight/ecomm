@@ -17,6 +17,8 @@
 
   export let data;
 
+  let categories = data.categories as Array<{ id: string; name: string }>;
+
   const { form, errors, submitting, enhance } = superForm(data.form, {
     validators: upsertProductSchema,
     taintedMessage: null,
@@ -34,10 +36,19 @@
 
   const filteredCategories = (searchQuery: string) =>
     searchQuery
-      ? data.categories.filter((category) =>
+      ? categories.filter((category) =>
           category.name.toLowerCase().includes(searchQuery.toLowerCase()),
         )
-      : data.categories;
+      : categories;
+
+  let filteredCategoriesArr: Array<{id: string, name: string}> = []
+
+  function selectCategory(category: {
+    id: string;
+    name: string;
+  }) {
+    filteredCategoriesArr.push(category);
+  }
 </script>
 
 <AppForm
@@ -66,10 +77,21 @@
           style="max-height: 200px;"
         >
           {#each filteredCategories(searchQuery) as category}
-            <button
+            <button type="button"
               class="hover:bg-gray-100 px-3 py-2 cursor-pointer border-gray-300 bg-gray-50 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 w-full text-left"
               on:click={() => {
+                if (filteredCategoriesArr.some((categ) => categ.id === category.id)) {
+                  console.warn(
+                    'Category with ID',
+                    category.id,
+                    'already exists or does not exist in the fetched categories.',
+                  );
+                  searchQuery = '';
+                  return; // Prevent adding duplicate or non-existent category
+                }
+
                 setCategoriesArr(category);
+                selectCategory(category)
                 searchQuery = '';
               }}
             >
@@ -90,16 +112,21 @@
         <div class="flex flex-col mt-2">
           <ul>
             <p for="categoryId" class="mr-2 text-gray-600 dark:text-white">Selected:</p>
-            {#each $categoriesArr as categorySelected}
-              <div class="flex items-center gap-2">
-                <li class="ml-4">{categorySelected.name}</li>
+            <div class="flex items-center">
+              {#each $categoriesArr as categorySelected}
+              <div class="flex items-center gap-1">
+                <li class="ml-2">{categorySelected.name}</li>
                 <button
-                  on:click={removeCategory(categorySelected.id)}
+                type="button"
+                  on:click={() => {
+                    filteredCategoriesArr = filteredCategoriesArr.filter(categ => categ.id !== categorySelected.id)
+                    removeCategory(categorySelected.id)}}
                   class="bg grid h-fit px-2 rounded bg-red-500 font-bold">x</button
                 >
+                <input type="hidden" name="categoryId" value={categorySelected.id} />
+                </div>
+                {/each}
               </div>
-              <input type="hidden" name="categoryId" value={categorySelected.id} />
-            {/each}
           </ul>
         </div>
       {/if}
