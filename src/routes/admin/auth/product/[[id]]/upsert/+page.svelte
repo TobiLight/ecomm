@@ -132,7 +132,9 @@
             {#each $categoriesArr as categorySelected}
               <div class="flex items-center gap-2">
                 <li class="ml-4">{categorySelected.name}</li>
-                <button class="bg grid h-fit px-2 rounded bg-red-500 font-bold">x</button>
+                <button on:click={e => {
+                  
+                }} class="bg grid h-fit px-2 rounded bg-red-500 font-bold">x</button>
               </div>
               <input type="hidden" name="categoryId" value={categorySelected.id} />
             {/each}
