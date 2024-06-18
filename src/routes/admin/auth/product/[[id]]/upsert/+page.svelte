@@ -7,7 +7,7 @@
   import AppFileInput from '$lib/components/AppFileInput.svelte';
   import { page } from '$app/stores';
   import AppSelect from '$lib/components/AppSelect.svelte';
-    import { showSelected, setShowSelected } from '../../../../../../store/store.js';
+    import { showSelected, setShowSelected, setCategoriesArr, categoriesArr } from '../../../../../../store/store.js';
 
   export let data;
 
@@ -57,7 +57,7 @@
 
   let tempCategory: { id: string; name: string };
 
-  $: filterCategoriesArr
+  $: console.log($categoriesArr)
 
 </script>
 
@@ -103,6 +103,7 @@
                   return;
                 }
                 selectCategory(category);
+                setCategoriesArr(category)
                 tempCategory = category;
                 searchQuery = '';
               }}
@@ -120,11 +121,11 @@
         </div>
       {/if}
 
-      {#if $showSelected}
+      {#if $categoriesArr.length > 0}
         <div class="flex flex-col mt-2">
           <ul>
             <p for="categoryId" class="mr-2 text-gray-600 dark:text-white">Selected:</p>
-            {#each filterCategoriesArr as categorySelected}
+            {#each $categoriesArr as categorySelected}
               <button class="ml-4">{categorySelected.name}</button>
               <input type="hidden" name="categoryId" value={categorySelected.id} />
             {/each}
