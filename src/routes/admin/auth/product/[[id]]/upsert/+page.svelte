@@ -41,26 +41,6 @@
         )
       : data.categories;
 
-  const filterCategoriesArr: Array<{
-    id: string;
-    name: string;
-  }> = [];
-
-  // let fil = filteredCategories(searchQuery);
-
-  function selectCategory(category: { id: string; name: string }) {
-    // selectedCategoryId = category.id;
-    let existingCat = new Set(filterCategoriesArr);
-
-    if (existingCat.has(category)) {
-      return;
-    } else {
-      filterCategoriesArr.push(category);
-    }
-
-  }
-
-  let tempCategory: { id: string; name: string };
 </script>
 
 <AppForm
