@@ -50,7 +50,11 @@ export class ProductRepository extends BaseRepository<'Product'> {
     return await this.prisma.product.create({
       data: {
         ...data,
-        categories: undefined,
+        categories: {
+          connect: {
+            id: "ce4f9635-1083-4323-9f78-6383155f6114"
+          }
+        },
         id: uuid4(),
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -190,7 +194,14 @@ export class ProductRepository extends BaseRepository<'Product'> {
         },
       });
     }
-    
-    return await this.prisma.product.update({ where: { id: data.id }, data });
+
+    return await this.prisma.product.update({ where: { id: data.id }, data: {
+      ...data,
+      categories: {
+        connect: {
+          id: "ce4f9635-1083-4323-9f78-6383155f6114"
+        }
+      },
+    } });
   }
 }
