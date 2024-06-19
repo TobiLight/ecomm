@@ -6,7 +6,6 @@
   import { currency } from '$lib/constants';
   import { noDataFound } from '$lib/images';
   import { getTitle } from '$lib/utils';
-  import { navigating as nav } from '../../store/store';
   import { navigating } from '$app/stores';
 
   export let data;

@@ -14,7 +14,7 @@
   {#each items as item}
     <AppRow
       itemId={item.id}
-      headingColumn={item.name}
+      headingColumn={item.name ?? ""}
       columns={[item.email]}
       link={name.singular}
     />

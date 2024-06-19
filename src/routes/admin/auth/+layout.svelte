@@ -59,14 +59,16 @@
   ];
 
   export let data: PageData;
-  $: user = data.currentUser;
   
+  let isOpen: boolean = true
+
+  $: user = data.currentUser;  
 </script>
 
 <div class="relative">
-  <Navbar user={user} isLoggedIn={user ? true : false} />
+  <Navbar openSideBar={() => isOpen = !isOpen} user={user} isLoggedIn={user ? true : false} />
 
-  <Sidebar links={user?.role === 'USER' ? userLinks : links} />
+  <Sidebar isOpen={isOpen} links={user?.role === 'USER' ? userLinks : links} />
 
   <div
     class="flex min-h-screen flex-col gap-y-5 bg-gray-100 p-6 dark:bg-gray-900 md:ml-64"

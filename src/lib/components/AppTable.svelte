@@ -55,7 +55,7 @@
         </tr>
       </thead>
       <tbody>
-        <NoDataRow totalItems={items.length} colspan={columns.length + 1} />
+        <NoDataRow totalItems={items !== undefined ? items.length : 0} colspan={columns.length + 1} />
         <slot />
       </tbody>
       <tfoot

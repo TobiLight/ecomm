@@ -4,7 +4,8 @@
   import { page } from '$app/stores';
   import { onMount } from 'svelte'; // Assuming you're using Svelte
   import Icon, { loadIcons } from '@iconify/svelte';
-  import  Link, { type LinkItem } from "../../admin/auth/components/Link.svelte";
+  import type Link from '../../admin/auth/components/Link.svelte';
+  import type { LinkItem } from '../../admin/auth/components/Link.svelte';
   import type { User } from '@prisma/client';
 
   export let isLoggedIn: boolean;
@@ -24,6 +25,8 @@
       sidebarEl.classList.toggle('hidden');
     });
   });
+
+  export  let openSideBar: () => void
 
   const links: LinkItem[] = [
     {
@@ -92,6 +95,7 @@
       <div class="flex items-center justify-start">
         <!-- TODO: Make button work -->
         <button
+        on:click={openSideBar}
           data-drawer-target="Sidebar"
           data-drawer-toggle="Sidebar"
           aria-controls="Sidebar"
@@ -174,14 +178,15 @@
   </div>
 </nav>
 
-<aside
-  class="fixed left-0 top-0 z-40 mt-16 h-screen w-64 border-r border-gray-200 bg-white transition-transform dark:border-gray-700 dark:bg-gray-800 md:hidden py-6"
+<!-- <aside
+  class:isSideBarOpen
+  class="hidden fixed left-0 top-0 z-40 mt-16 h-screen w-64 border-r border-gray-200 bg-white transition-transform dark:border-gray-700 dark:bg-gray-800 md:hidden py-6"
   aria-label="Sidebar"
   id="Sidebar"
 >
   <div class="h-full overflow-y-auto bg-white px-3 dark:bg-gray-800">
     <ul class="space-y-2 font-medium">
-      {#if !user}
+      {#if user && user.role === 'ADMIN'}
         {#each links as link}
           <li
             class:active={$page.url.pathname.startsWith(
@@ -260,7 +265,8 @@
             {:else}
               <a
                 href={link.href}
-                class="group flex items-center rounded-lg p-2 {$page.url.pathname.startsWith(
+                on:click={() => {}}
+                class="aside-item group flex items-center rounded-lg p-2 {$page.url.pathname.startsWith(
                   '/admin/auth/guest/logout',
                 )
                   ? 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-white dark:text-white'
@@ -282,7 +288,7 @@
       {/if}
     </ul>
   </div>
-</aside>
+</aside> -->
 
 <style type="postcss">
   a.active {

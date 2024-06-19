@@ -9,7 +9,12 @@ export async function load(event) {
 
   const items = await repository.getMany();
 
-  const data = formatListResponse(items);
+  let ret = {
+    items,
+    total: items.length
+  }
+
+  const data = formatListResponse(ret);
 
   return { data };
 }
