@@ -2,6 +2,7 @@
   import { currency } from '$lib/constants';
   import AddToCart from '$guest/components/AddToCart.svelte';
   import { getTitle } from '$lib/utils';
+  import BackIcon from "$lib/components/BackIcon.svelte"
 
   export let data;
 
@@ -9,7 +10,13 @@
   $: isInCart = data.isInCart;
 </script>
 
-<div class="w-full py-24 lg:px-0 px-5">
+<div class="w-full pt-16 pb-24 lg:px-0 px-5">
+  <div class="max-w-screen-lg text-white mx-auto pb-10">
+    <a href="/" class="flex items-center rounded bg-white dark:bg-transparent border dark:border-primary-800 p-2 w-fit">
+      <BackIcon class="w-8 h-8" />
+    back
+    </a>
+  </div>
   <div
     class="grid grid-cols-1 md:grid-cols-2 rounded-lg py-8 sm:px-16 mx-auto max-w-screen-lg lg:py-16 bg-white dark:bg-gray-800 px-4 gap-5"
   >

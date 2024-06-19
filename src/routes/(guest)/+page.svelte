@@ -64,6 +64,7 @@
             >
               <div class="w-full text-center relative">
                 <a href="/product/{product.id}" class="w-[300px] h-[300px] mx-auto relative flex">
+                  <!-- TODO: CLOUDINARY IMAGE -->
                   <img
                     loading="lazy"
                     width="320"
