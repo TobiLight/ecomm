@@ -52,7 +52,7 @@
             Category
           </dt>
           <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-            {product.category?.name || '-'}
+            {product.categories.map(category => category.name).join(", ") || '-'}
           </dd>
         </div>
       </dl>
