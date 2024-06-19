@@ -36,6 +36,10 @@ export function setCategoriesArr(category: {id: string, name: string}) {
     categoriesArr.update(cat => [...cat, {...category}])
 }
 
+export function resetCategoriesArr() {
+    categoriesArr.set([])
+}
+
 export function removeCategory(categoryId: string) {
     return categoriesArr.update((category) => category.filter((cat) => cat.id !== categoryId))
 }

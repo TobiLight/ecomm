@@ -62,13 +62,13 @@
             <div
               class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-fit"
             >
-              <div class="w-full text-center">
-                <a href="/product/{product.id}">
+              <div class="w-full text-center relative">
+                <a href="/product/{product.id}" class="w-[300px] h-[300px] mx-auto relative flex">
                   <img
                     loading="lazy"
                     width="320"
                     height="288"
-                    class="p-8 rounded-t-lg"
+                    class="p-8 rounded-t-lg object-contain max-w-sm"
                     src={product.image}
                     alt={product.name}
                   />

@@ -3,6 +3,7 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { upsertProductSchema } from '$lib/server/validation';
 import { useRepository } from '$lib/server/repositories';
 import { uploadFile } from '$lib/server/filesystem';
+import { resetCategoriesArr } from '../../../../../store/store.js';
 
 const repository = useRepository('product');
 const categoryRepository = useRepository('category');
@@ -36,6 +37,8 @@ export const actions = {
     ) as Array<string>;
 
     await repository.create({ ...form.data, image: form.data.image as string, categories: categoryIDS });
+
+    resetCategoriesArr()
 
     throw redirect(303, '/admin/auth/product/list');
   },
