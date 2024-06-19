@@ -9,10 +9,10 @@
   import type { User } from '@prisma/client';
 
   export let isLoggedIn: boolean;
-  export let user: Pick<
-    User,
-    'id' | 'name' | 'email' | 'role' | 'createdAt'
-  > | null;
+  // export let user: Pick<
+  //   User,
+  //   'id' | 'name' | 'email' | 'role' | 'createdAt'
+  // > | null;
 
   onMount(() => {
     const buttonEl = document.querySelector(
@@ -65,24 +65,6 @@
     },
   ];
 
-  const userLinks: LinkItem[] = [
-    {
-      name: 'Dashboard',
-      href: '/admin/auth/dashboard',
-      icon: 'mdi:view-dashboard-variant',
-    },
-    {
-      name: 'My Orders',
-      active: '/admin/auth/order',
-      href: '/admin/auth/order/list',
-      icon: 'mdi:cart',
-    },
-    {
-      name: 'Logout',
-      href: '/admin/auth/guest/logout',
-      icon: 'mdi:logout',
-    },
-  ];
 
   loadIcons(links.map(({ icon }) => icon));
 </script>
@@ -177,118 +159,6 @@
     </div>
   </div>
 </nav>
-
-<!-- <aside
-  class:isSideBarOpen
-  class="hidden fixed left-0 top-0 z-40 mt-16 h-screen w-64 border-r border-gray-200 bg-white transition-transform dark:border-gray-700 dark:bg-gray-800 md:hidden py-6"
-  aria-label="Sidebar"
-  id="Sidebar"
->
-  <div class="h-full overflow-y-auto bg-white px-3 dark:bg-gray-800">
-    <ul class="space-y-2 font-medium">
-      {#if user && user.role === 'ADMIN'}
-        {#each links as link}
-          <li
-            class:active={$page.url.pathname.startsWith(
-              '/admin/auth/guest/logout',
-            )}
-          >
-            {#if link.href.includes('/logout')}
-              <form action="/admin/auth/logout" method="post">
-                <button
-                  class="cursor-pointer group flex items-center rounded-lg p-2 {$page.url.pathname.startsWith(
-                    '/admin/auth/guest/logout',
-                  )
-                    ? 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-white dark:text-white'
-                    : 'text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'}"
-                >
-                  <Icon
-                    icon={link.icon}
-                    class="flex-shrink-0 text-2xl transition duration-75 {$page.url.pathname.startsWith(
-                      link?.active || '/admin/auth/dashboard',
-                    )
-                      ? 'text-white'
-                      : 'text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'}"
-                  />
-                  <span class="ml-3 flex-1 whitespace-nowrap">{link.name}</span>
-                </button>
-              </form>
-            {:else}
-              <a
-                href={link.href}
-                class="group flex items-center rounded-lg p-2 {$page.url.pathname.startsWith(
-                  '/admin/auth/guest/logout',
-                )
-                  ? 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-white dark:text-white'
-                  : 'text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'}"
-              >
-                <Icon
-                  icon={link.icon}
-                  class="flex-shrink-0 text-2xl transition duration-75 {$page.url.pathname.startsWith(
-                    '/admin/auth/guest/logout',
-                  )
-                    ? 'text-white'
-                    : 'text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'}"
-                />
-                <span class="ml-3 flex-1 whitespace-nowrap">{link.name}</span>
-              </a>
-            {/if}
-          </li>
-        {/each}
-      {:else}
-        {#each userLinks as link}
-          <li
-            class:active={$page.url.pathname.startsWith(
-              '/admin/auth/guest/logout',
-            )}
-          >
-            {#if link.href.includes('/logout')}
-              <form action="/admin/auth/logout" method="post">
-                <button
-                  class="cursor-pointer group flex items-center rounded-lg p-2 {$page.url.pathname.startsWith(
-                    '/admin/auth/guest/logout',
-                  )
-                    ? 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-white dark:text-white'
-                    : 'text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'}"
-                >
-                  <Icon
-                    icon={link.icon}
-                    class="flex-shrink-0 text-2xl transition duration-75 {$page.url.pathname.startsWith(
-                      '/admin/auth/guest/logout',
-                    )
-                      ? 'text-white'
-                      : 'text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'}"
-                  />
-                  <span class="ml-3 flex-1 whitespace-nowrap">{link.name}</span>
-                </button>
-              </form>
-            {:else}
-              <a
-                href={link.href}
-                on:click={() => {}}
-                class="aside-item group flex items-center rounded-lg p-2 {$page.url.pathname.startsWith(
-                  '/admin/auth/guest/logout',
-                )
-                  ? 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 text-white dark:text-white'
-                  : 'text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700'}"
-              >
-                <Icon
-                  icon={link.icon}
-                  class="flex-shrink-0 text-2xl transition duration-75 {$page.url.pathname.startsWith(
-                    '/admin/auth/guest/logout',
-                  )
-                    ? 'text-white'
-                    : 'text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white'}"
-                />
-                <span class="ml-3 flex-1 whitespace-nowrap">{link.name}</span>
-              </a>
-            {/if}
-          </li>
-        {/each}
-      {/if}
-    </ul>
-  </div>
-</aside> -->
 
 <style type="postcss">
   a.active {
