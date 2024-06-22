@@ -40,7 +40,7 @@
               dfghj3er6fyuik23456yuhbgvfdf
             </li>
           </div>
-          {#if paymentMad}
+          {#if paymentMade}
             <form action="" class="grid gap-4">
               <label
                 for="transactionHsh"
