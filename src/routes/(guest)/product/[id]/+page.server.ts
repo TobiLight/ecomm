@@ -11,7 +11,7 @@ const repository = useRepository('product');
 export async function load(event) {
   const id = event.params.id;
 
-  const getForm = () => superValidate(addToCartSchema);
+  const getForm = () => superValidate({quantity: 1}, addToCartSchema);
 
   const getProduct = async () => {
     const product = await repository.getOne(id);
@@ -40,7 +40,9 @@ export const actions = {
 
     const quantity = form.data.quantity;
 
-    form.data.productID = id;
+    // form.data.productID = id;
+
+    console.log(form.data.quantity)
 
     if (!form.valid) {
       return fail(400, { form });
@@ -63,10 +65,13 @@ export const actions = {
     }
   },
 
-  remove: (event) => {
+  remove: async (event) => {
     const cart = getCart(event);
+    const form = await event.request.formData()
 
-    cart.delete(event.params.id);
+    const productID: string = form.get('productID') as string
+
+    cart.delete(productID);
 
     setCart(event, cart);
 

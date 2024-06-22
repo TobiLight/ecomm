@@ -4,6 +4,7 @@
   import { noProduct } from '$lib/images';
   import { updateCartSchema } from '$lib/validation';
   import { getTitle } from '$lib/utils';
+  import {enhance as enh} from '$app/forms'
 
   export let data;
 
@@ -16,7 +17,6 @@
     (total, product, index) => total + product.price * $form.quantity[index],
     0,
   );
-  $: console.log("prod", $form.product)
 </script>
 
 <div class="w-full py-24">
@@ -29,6 +29,7 @@
     </div>
   {:else}
     <form
+      id="Form"
       use:enhance
       method="post"
       action="/product/?/updateAndCheckout"
@@ -54,7 +55,7 @@
             </tr>
           </thead>
           <tbody>
-            {#each products as product, index}
+            {#each products as product, index (product.id)}
               <tr
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
@@ -101,6 +102,8 @@
                     id="Form1"
                   >
                     <button
+                    name="productID"
+                    value={product.id}
                       type="submit"
                       form="Form1"
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"
@@ -127,6 +130,7 @@
 
         <button
           type="submit"
+          id="Form"
           class="text-white bg-secondary-600 hover:bg-secondary-700 focus:ring-4 focus:outline-none focus:ring-secondary-200 dark:focus:ring-secondary-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
           >Place order</button
         >

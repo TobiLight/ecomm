@@ -15,58 +15,35 @@
   $: cart = data.cart;
   $: products = data.products;
   $: total = products.reduce((total, product) => {
-    console.log(cart.get(product.id))
-    return (total + product.price) * (cart.get(product.id) as number)
+    console.log(cart.get(product.id));
+    return (total + product.price) * (cart.get(product.id) as number);
   }, 0);
 </script>
 
 <div class="w-full py-24">
   <div
-  class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-5 xl:px-0 px-5 mb-10"
+    class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-5 xl:px-0 px-5 mb-10"
   >
-<h1 class="text-3xl font-bold dark:text-white">Checkout</h1></div>
-  <form
-    use:enhance
-    method="post"
+    <h1 class="text-3xl font-bold dark:text-white">Payment</h1>
+  </div>
+  <div
     class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-5 xl:px-0 px-5"
   >
-    <div
-      class="w-full flex self-start p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
-    >
-      <div class="w-full grid gap-4 sm:gap-6">
-        <div>
-          <AppInput
-            bind:value={$form.name}
-            input={{ name: 'name', errors: $errors.name }}
-          />
-        </div>
-        <div>
-          <AppInput
-            bind:value={$form.email}
-            input={{ name: 'email', type: 'email', errors: $errors.email }}
-          />
-        </div>
-        <div>
-          <AppInput
-            bind:value={$form.phone}
-            input={{ name: 'phone', errors: $errors.phone }}
-          />
-        </div>
-        <div>
-          <AppInput
-            bind:value={$form.city}
-            input={{ name: 'city', errors: $errors.city }}
-          />
-        </div>
-        <div>
-          <AppInput
-            bind:value={$form.address}
-            input={{ name: 'address', errors: $errors.address }}
-          />
-        </div>
-        <div>
-          <SubmitButton submitting={$submitting}>Confirm order</SubmitButton>
-        </div>
+    <!--  -->
+
+    <div class="w-full dark:text-white">
+      <div class="grid gap-3">
+        <p>Currently Accepted Payment Method:</p>
+        <ul class="ml-5">
+          <div class="flex gap-2 items-center">
+            <span>BTC Address:</span>
+            <li
+              class="bg-white border border-gray-200 rounded-lg shadow px-1 font-bold dark:bg-gray-800 dark:border-gray-700"
+            >
+              dfghj3er6fyuik23456yuhbgvfdf
+            </li>
+          </div>
+        </ul>
       </div>
     </div>
 
@@ -128,11 +105,16 @@
                 {currency}{total}
               </div>
             </div>
+            <button
+              type="button"
+              class="mt-4 text-white bg-secondary-600 hover:bg-secondary-700 focus:ring-4 focus:outline-none focus:ring-secondary-200 dark:focus:ring-secondary-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+              >I have made payment</button
+            >
           </li>
         </ul>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 
 <svelte:head>

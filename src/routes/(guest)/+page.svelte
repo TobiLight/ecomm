@@ -110,22 +110,12 @@
                         min={1}
                         max={product.quantity}
                         on:change={(e) => {
-                          // data.arr.map(d => {
-                          //   console.log(d.productID === product.id)
-                          // //   if (product.id !== d.productID) {
-                          // //   d.productID = product.id;
-                          // //   d.quantity += 1;
-                          // //   return
-                          // // } else {
-                          // //   d.quantity += $form.quantity
-                          // // }
-                          // })
                           if (product.id !== $form.productID) {
                             $form.quantity = 0
                             $form.productID = product.id;
-                            $form.quantity += 1;
+                            $form.quantity = parseInt(e.currentTarget.value);
                           } else {
-                            $form.quantity += $form.quantity
+                            $form.quantity += 1
                           }
                         }}
                         value={data.arr.map(d => d.productID === product.id ? d.quantity : 1)}
@@ -135,9 +125,7 @@
                     <AddToCart
                       isInCart={cart.has(product.id)}
                       {product}
-                      quantity={$form.quantity > 1
-                        ? $form.quantity - 1
-                        : $form.quantity + 1}
+                      quantity={$form.quantity}
                     />
                   </div>
                 </div>

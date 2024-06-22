@@ -18,9 +18,6 @@ export async function load(event) {
     Array.from(cart.keys()),
   );
 
-  console.log(cart, cart.get(products[0].id))
-
-
   const form = await superValidate(createOrderSchema);
 
   return {
@@ -63,7 +60,7 @@ export const actions = {
 
       removeCart(event);
 
-      throw redirect(303, '/');
+      throw redirect(303, '/payment');
     }
   },
 };

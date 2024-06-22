@@ -28,33 +28,35 @@ export const nodes = [
 	() => import('./nodes/24'),
 	() => import('./nodes/25'),
 	() => import('./nodes/26'),
-	() => import('./nodes/27')
+	() => import('./nodes/27'),
+	() => import('./nodes/28')
 ];
 
 export const server_loads = [2,3,5,6];
 
 export const dictionary = {
 		"/(guest)": [~7,[2]],
-		"/admin/auth/admin/create": [~14,[3]],
-		"/admin/auth/admin/[[id]]/list": [~12,[3]],
-		"/admin/auth/admin/[[id]]/upsert": [~13,[3]],
-		"/admin/auth/category/create": [~17,[3]],
-		"/admin/auth/category/[[id]]/list": [~15,[3],[,4]],
-		"/admin/auth/category/[[id]]/upsert": [~16,[3]],
-		"/admin/auth/dashboard": [18,[3]],
-		"/admin/auth/logout": [~19,[3]],
-		"/admin/auth/order/[[id]]/list": [~20,[3]],
-		"/admin/auth/order/[[id]]/upsert": [~21,[3]],
-		"/admin/auth/product/create": [~24,[3]],
-		"/admin/auth/product/[[id]]/list": [~22,[3]],
-		"/admin/auth/product/[[id]]/upsert": [~23,[3]],
-		"/admin/guest/login": [~25,[5]],
-		"/admin/guest/register": [~26,[5]],
-		"/admin/super/register": [~27,[6]],
+		"/admin/auth/admin/create": [~15,[3]],
+		"/admin/auth/admin/[[id]]/list": [~13,[3]],
+		"/admin/auth/admin/[[id]]/upsert": [~14,[3]],
+		"/admin/auth/category/create": [~18,[3]],
+		"/admin/auth/category/[[id]]/list": [~16,[3],[,4]],
+		"/admin/auth/category/[[id]]/upsert": [~17,[3]],
+		"/admin/auth/dashboard": [19,[3]],
+		"/admin/auth/logout": [~20,[3]],
+		"/admin/auth/order/[[id]]/list": [~21,[3]],
+		"/admin/auth/order/[[id]]/upsert": [~22,[3]],
+		"/admin/auth/product/create": [~25,[3]],
+		"/admin/auth/product/[[id]]/list": [~23,[3]],
+		"/admin/auth/product/[[id]]/upsert": [~24,[3]],
+		"/admin/guest/login": [~26,[5]],
+		"/admin/guest/register": [~27,[5]],
+		"/admin/super/register": [~28,[6]],
 		"/(guest)/cart": [~8,[2]],
 		"/(guest)/checkout": [~9,[2]],
-		"/(guest)/product": [~10,[2]],
-		"/(guest)/product/[id]": [~11,[2]]
+		"/(guest)/payment": [~10,[2]],
+		"/(guest)/product": [~11,[2]],
+		"/(guest)/product/[id]": [~12,[2]]
 	};
 
 export const hooks = {

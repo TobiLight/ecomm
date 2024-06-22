@@ -11,7 +11,6 @@ export async function load(event) {
   
   let products: Awaited<ReturnType<typeof repository.getAllById>> = [];
 
-  
   if (cart.size > 0)
     products = await repository.getAllById(Array.from(cart.keys()));
   

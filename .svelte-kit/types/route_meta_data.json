@@ -85,6 +85,10 @@
 		"src/routes/(guest)/checkout/+page.server.ts",
 		"src/routes/(guest)/+layout.server.ts"
 	],
+	"/(guest)/payment": [
+		"src/routes/(guest)/payment/+page.server.ts",
+		"src/routes/(guest)/+layout.server.ts"
+	],
 	"/(guest)/product": [
 		"src/routes/(guest)/product/+page.server.ts",
 		"src/routes/(guest)/+layout.server.ts"
