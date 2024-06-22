@@ -2,9 +2,16 @@
   import { currency } from '$lib/constants';
   import AddToCart from '$guest/components/AddToCart.svelte';
   import { getTitle } from '$lib/utils';
-  import BackIcon from "$lib/components/BackIcon.svelte"
+  import BackIcon from '$lib/components/BackIcon.svelte';
+  import { addToCartSchema } from '$lib/validation.js';
+  import { superForm } from 'sveltekit-superforms/client';
 
   export let data;
+
+  const { form } = superForm(data.form, {
+    validators: addToCartSchema,
+    taintedMessage: null,
+  });
 
   $: product = data.product;
   $: isInCart = data.isInCart;
@@ -12,9 +19,12 @@
 
 <div class="w-full pt-16 pb-24 lg:px-0 px-5">
   <div class="max-w-screen-lg text-white mx-auto pb-10">
-    <a href="/" class="flex items-center rounded bg-white dark:bg-transparent border dark:border-primary-800 p-2 w-fit">
+    <a
+      href="/"
+      class="flex items-center rounded bg-white dark:bg-transparent border dark:border-primary-800 p-2 w-fit"
+    >
       <BackIcon class="w-8 h-8" />
-    back
+      back
     </a>
   </div>
   <div
@@ -40,7 +50,9 @@
         >
           Details
         </dt>
-        <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400 whitespace-pre-wrap">
+        <dd
+          class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400 whitespace-pre-wrap"
+        >
           {product.description}
         </dd>
       </dl>
@@ -52,12 +64,17 @@
             Category
           </dt>
           <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-            {product.categories.map(category => category.name).join(", ") || '-'}
+            {product.categories.map((category) => category.name).join(', ') ||
+              '-'}
           </dd>
         </div>
       </dl>
       <div class="flex items-center space-x-4">
-        <AddToCart {isInCart} {product} />
+        <AddToCart
+          {isInCart}
+          {product}
+          quantity={$form.quantity > 1 ? $form.quantity - 1: $form.quantity + 1}
+        />
       </div>
     </div>
   </div>

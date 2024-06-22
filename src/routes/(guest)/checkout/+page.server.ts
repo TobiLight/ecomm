@@ -18,6 +18,9 @@ export async function load(event) {
     Array.from(cart.keys()),
   );
 
+  console.log(cart, cart.get(products[0].id))
+
+
   const form = await superValidate(createOrderSchema);
 
   return {
@@ -38,6 +41,7 @@ export const actions = {
     const products = await useRepository('product').getAllById(
       Array.from(cart.keys()),
     );
+
     const total = products.reduce(
       (total, product) =>
         total + product.price * (cart.get(product.id) as number),

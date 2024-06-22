@@ -59,6 +59,7 @@ export const upsertCategorySchema = object({
 });
 
 export const addToCartSchema = object({
+  productID: string(),
   quantity: coerce
     .number()
     .positive()

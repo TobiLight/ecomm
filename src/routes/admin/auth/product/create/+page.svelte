@@ -156,7 +156,7 @@
         name: 'name',
         placeholder: 'SuperTech X1',
         errors: $errors.name,
-        value: data.item?.name,
+        value: data.form.data.name,
       }}
       bind:value={$form.name}
     />

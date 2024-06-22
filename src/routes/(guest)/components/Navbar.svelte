@@ -2,8 +2,9 @@
   import { DarkMode } from 'flowbite-svelte';
   import { page } from '$app/stores';
   import AppLogo from '$lib/components/AppLogo.svelte';
-
+  
   export let isLoggedIn: boolean;
+  export let cartCount: number = 0
 
   $: category = $page.url.searchParams.get('category');
 </script>
@@ -28,9 +29,9 @@
         <li>
           <a
             href="/cart"
-            class="block text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white"
+            class="text-gray-900 hover:text-primary-700 dark:hover:text-primary-500 dark:text-white flex gap-1 items-center"
             class:active={$page.url.pathname === '/cart' }
-            >Cart</a
+            >Cart <span class="text-sm rounded-full bg-primary-700 px-2 text-white">{cartCount}</span> </a
           >
         </li>
         {#if isLoggedIn}

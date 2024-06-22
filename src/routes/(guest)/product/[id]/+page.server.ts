@@ -4,13 +4,14 @@ import { addToCartSchema, updateCartSchema } from '$lib/validation';
 import { useRepository } from '$lib/server/repositories';
 import { throwIfNotFound } from '$lib/utils';
 import { getCart, setCart } from '$guest/utils';
+import { setCatrtCount } from '../../../../store/store.js';
 
 const repository = useRepository('product');
 
 export async function load(event) {
   const id = event.params.id;
 
-  const getForm = () => superValidate({ quantity: 1 }, addToCartSchema);
+  const getForm = () => superValidate(addToCartSchema);
 
   const getProduct = async () => {
     const product = await repository.getOne(id);
@@ -25,7 +26,7 @@ export async function load(event) {
   };
 
   return {
-    form: getForm(),
+    form: await getForm(),
     product: getProduct(),
     isInCart: isInCart(),
   };
@@ -34,13 +35,16 @@ export async function load(event) {
 export const actions = {
   add: async (event) => {
     const form = await superValidate(event, addToCartSchema);
-    if (!form.valid) {
-      return fail(400, { form });
-    }
 
     const id = event.params.id;
 
     const quantity = form.data.quantity;
+
+    form.data.productID = id;
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
 
     const inStock = await repository.isInStock(id, quantity);
 
@@ -51,7 +55,11 @@ export const actions = {
 
       setCart(event, cart);
 
-      throw redirect(303, '/cart');
+      setCatrtCount(cart.size);
+
+      return { form };
+
+      throw redirect(303, '/');
     }
   },
 
@@ -64,6 +72,7 @@ export const actions = {
 
     throw redirect(303, '/cart');
   },
+
   updateAndCheckout: async (event) => {
     const form = await superValidate(event, updateCartSchema);
     if (!form.valid) {
@@ -78,7 +87,6 @@ export const actions = {
 
     setCart(event, cart);
 
-    throw redirect(303, "/checkout")
-  }
-  
+    throw redirect(303, '/checkout');
+  },
 };

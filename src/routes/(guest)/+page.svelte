@@ -7,13 +7,21 @@
   import { noDataFound } from '$lib/images';
   import { getTitle } from '$lib/utils';
   import { navigating } from '$app/stores';
+  import { superForm } from 'sveltekit-superforms/client';
+  import { addToCartSchema } from '$lib/validation';
 
   export let data;
+
+  const { form } = superForm(data.form, {
+    validators: addToCartSchema,
+    taintedMessage: null,
+  });
 
   $: categories = data.categories;
   $: products = data.products.items;
   $: totalPages = data.products.totalPages;
   $: cart = data.cart;
+
 </script>
 
 <div class="grid grid-cols-1 md:grid-cols-4 gap-y-5 md:gap-x-5 p-5">
@@ -63,7 +71,10 @@
               class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-fit"
             >
               <div class="w-full text-center relative">
-                <a href="/product/{product.id}" class="w-[300px] h-[300px] mx-auto relative flex">
+                <a
+                  href="/product/{product.id}"
+                  class="w-[300px] h-[300px] mx-auto relative flex"
+                >
                   <!-- TODO: CLOUDINARY IMAGE -->
                   <img
                     loading="lazy"
@@ -83,11 +94,52 @@
                     {product.name}
                   </h5>
                 </a>
-                <div class="flex items-center justify-between">
+                <div
+                  class="grid grid-cols-1 gap-2 items-center justify-between w-full"
+                >
                   <span class="text-xl font-bold text-gray-900 dark:text-white"
                     >{currency}{product.price}</span
                   >
-                  <AddToCart isInCart={cart.has(product.id)} {product} />
+
+                  <div class="flex items-end justify-between dark:text-white">
+                    <div class="qty flex flex-col gap-1">
+                      <p>qty</p>
+                      <input
+                        type="number"
+                        name="quantity"
+                        min={1}
+                        max={product.quantity}
+                        on:change={(e) => {
+                          // data.arr.map(d => {
+                          //   console.log(d.productID === product.id)
+                          // //   if (product.id !== d.productID) {
+                          // //   d.productID = product.id;
+                          // //   d.quantity += 1;
+                          // //   return
+                          // // } else {
+                          // //   d.quantity += $form.quantity
+                          // // }
+                          // })
+                          if (product.id !== $form.productID) {
+                            $form.quantity = 0
+                            $form.productID = product.id;
+                            $form.quantity += 1;
+                          } else {
+                            $form.quantity += $form.quantity
+                          }
+                        }}
+                        value={data.arr.map(d => d.productID === product.id ? d.quantity : 1)}
+                        class="w-[75px] bg-transparent px-3 py-1 rounded"
+                      />
+                    </div>
+                    <AddToCart
+                      isInCart={cart.has(product.id)}
+                      {product}
+                      quantity={$form.quantity > 1
+                        ? $form.quantity - 1
+                        : $form.quantity + 1}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

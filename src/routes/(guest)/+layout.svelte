@@ -7,10 +7,11 @@
   export let data: PageData
 
   $: user = data.currentUser
+
 </script>
 
 <div class="w-full flex flex-col min-h-screen">
-  <Navbar isLoggedIn={user ? true : false} />
+  <Navbar cartCount={data.cartCount} isLoggedIn={user ? true : false} />
   <slot />
   <Footer />
 </div>

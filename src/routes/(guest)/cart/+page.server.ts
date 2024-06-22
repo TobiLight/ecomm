@@ -1,7 +1,7 @@
 import { superValidate } from 'sveltekit-superforms/server';
 import { fail, redirect } from '@sveltejs/kit';
 import { useRepository } from '$lib/server/repositories';
-import { updateCartSchema } from '$lib/validation';
+import { addToCartSchema, updateCartSchema } from '$lib/validation';
 import { getCart, setCart } from '$guest/utils';
 
 export async function load(event) {
@@ -27,6 +27,10 @@ export async function load(event) {
 
   const form = await superValidate({ product, quantity }, updateCartSchema);
 
+  // const getForm = () => superValidate({ quantity: 1 }, addToCartSchema);
+
+  // let arr: Array<{productID: string, quantity: number}> = []
+  // arr.push((await getForm()).data)
   return {
     form,
     products,

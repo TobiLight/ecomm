@@ -3,7 +3,6 @@
   import { currency } from '$lib/constants';
   import { noProduct } from '$lib/images';
   import { updateCartSchema } from '$lib/validation';
-  import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
   import { getTitle } from '$lib/utils';
 
   export let data;
@@ -17,6 +16,7 @@
     (total, product, index) => total + product.price * $form.quantity[index],
     0,
   );
+  $: console.log("prod", $form.product)
 </script>
 
 <div class="w-full py-24">
@@ -91,7 +91,7 @@
                 <td
                   class="px-6 py-4 font-semibold text-gray-900 dark:text-white"
                 >
-                  {currency}{product.price}
+                  {currency}{product.price * $form.quantity[index]}
                 </td>
                 <td class="px-6 py-4">
                   <form
@@ -124,6 +124,7 @@
           <span class="text-5xl font-extrabold tracking-tight">{total}</span>
         </div>
         <!-- <SubmitButton wFull submitting={$submitting}>Update order</SubmitButton> -->
+
         <button
           type="submit"
           class="text-white bg-secondary-600 hover:bg-secondary-700 focus:ring-4 focus:outline-none focus:ring-secondary-200 dark:focus:ring-secondary-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
@@ -138,6 +139,6 @@
   <title>{getTitle('Cart')}</title>
   <meta
     name="description"
-    content="Your shopping cart, your way! SvelteKit-powered eCommerce makes checkout a breeze. Manage items effortlessly and complete your order in a snap. Shop now!"
+    content="Your shopping cart, your way! KVKElectronics store eCommerce makes checkout a breeze. Manage items effortlessly and complete your order in a snap. Shop now!"
   />
 </svelte:head>

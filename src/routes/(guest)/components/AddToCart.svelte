@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
+  import { applyAction, enhance } from '$app/forms';
   import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
-    import type { Product } from '@prisma/client';
+  import type { Product } from '@prisma/client';
 
   export let isInCart: boolean;
-  export let product: Pick<Product, "id">;
+  export let product: Pick<Product, 'id'>;
+  export let quantity: number;
 
   let submitting = false;
 </script>
@@ -15,14 +16,15 @@
   class="flex gap-5"
   use:enhance={() => {
     submitting = true;
-    return async ({ update }) => {
+    return async ({ update, result }) => {
       submitting = false;
-      return update();
+      await applyAction(result);
+      return await update();
     };
   }}
 >
   {#if !isInCart}
-    <input type="hidden" name="quantity" value="1" />
+    <input type="hidden" name="quantity" value={quantity} />
   {/if}
   <SubmitButton {submitting}>
     {#if isInCart}
