@@ -4,7 +4,6 @@ import {
   Prisma,
   PrismaClient,
   Product,
-  ProductCategories,
   ProductToOrder,
   User,
 } from '@prisma/client';
@@ -15,7 +14,6 @@ interface PrismaModelMapping {
   Product: Product;
   Order: Order;
   ProductToOrder: ProductToOrder;
-  ProductCategories: ProductCategories
 }
 
 export type ModelTypes = {
@@ -92,24 +90,6 @@ export type ModelTypes = {
     // @ts-ignore
     Return: Prisma.ProductToOrderGetPayload;
   };
-
-  // ProductCategories: {
-  //   Where: Prisma.ProductCategoriesWhereInput;
-  //   Select: Prisma.ProductCategoriesSelect;
-  //   Include: unknown;
-  //   Create:
-  //     | Prisma.ProductCategoriesCreateInput
-  //     | Prisma.ProductCategoriesUncheckedCreateInput;
-  //   Update:
-  //     | Prisma.ProductCategoriesUpdateInput
-  //     | Prisma.ProductCategoriesUncheckedUpdateInput;
-  //   Cursor: Prisma.ProductCategoriesWhereUniqueInput;
-  //   Order: Prisma.ProductCategoriesOrderByWithRelationInput;
-  //   Delegate: Prisma.ProductCategoriesDelegate;
-  //   GroupBy: Prisma.ProductCategoriesGroupByOutputType;
-  //   // @ts-ignore
-  //   Return: Prisma.ProductCategoriesGetPayload;
-  // };
 };
 
 export abstract class BaseRepository<T extends keyof PrismaModelMapping> {

@@ -4,13 +4,17 @@
   import { noProduct } from '$lib/images';
   import { updateCartSchema } from '$lib/validation';
   import { getTitle } from '$lib/utils';
-  import {enhance as enh} from '$app/forms'
+  import { applyAction, enhance as enh } from '$app/forms';
 
   export let data;
 
   const { form, submitting, enhance } = superForm(data.form, {
     validators: updateCartSchema,
   });
+
+  let isDeleting: boolean = false;
+
+  let isPlacingOrder: boolean = false;
 
   $: products = data.products;
   $: total = products.reduce(
@@ -30,7 +34,12 @@
   {:else}
     <form
       id="Form"
-      use:enhance
+      use:enh={({}) => {
+        isPlacingOrder = true;
+        return () => {
+          isPlacingOrder = false;
+        };
+      }}
       method="post"
       action="/product/?/updateAndCheckout"
       class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-5 xl:px-0 px-5"
@@ -81,6 +90,7 @@
                     <input
                       type="number"
                       name="quantity"
+                      disabled={isDeleting || isPlacingOrder}
                       bind:value={$form.quantity[index]}
                       class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                       placeholder="1"
@@ -96,18 +106,27 @@
                 </td>
                 <td class="px-6 py-4">
                   <form
-                    use:enhance
+                    use:enh={({}) => {
+                      isDeleting = true;
+
+                      return async ({ result }) => {
+                        isDeleting = false;
+
+                        return await applyAction(result);
+                      };
+                    }}
                     method="post"
                     action="/product/{product.id}?/remove"
                     id="Form1"
                   >
                     <button
-                    name="productID"
-                    value={product.id}
+                      name="productID"
+                      disabled={isDeleting || isPlacingOrder}
+                      value={product.id}
                       type="submit"
                       form="Form1"
                       class="font-medium text-red-600 dark:text-red-500 hover:underline"
-                      >Remove</button
+                      >{isDeleting ? 'Removing...' : 'Remove'}</button
                     >
                   </form>
                 </td>
@@ -131,8 +150,9 @@
         <button
           type="submit"
           id="Form"
+          disabled={isDeleting || isPlacingOrder}
           class="text-white bg-secondary-600 hover:bg-secondary-700 focus:ring-4 focus:outline-none focus:ring-secondary-200 dark:focus:ring-secondary-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
-          >Place order</button
+          >{isPlacingOrder ? 'Please wait...' : 'Place order'}</button
         >
       </div>
     </form>

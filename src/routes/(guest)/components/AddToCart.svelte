@@ -8,8 +8,6 @@
   export let quantity: number;
 
   let submitting = false;
-
-  $: console.log("quantity", quantity)
 </script>
 
 <form

@@ -9,7 +9,6 @@ import { CategoryRepository } from "./category-repository";
 import { ProductRepository } from "./product-repository";
 import { OrderRepository } from "./order-repository";
 import { ProductToOrderRepository } from "./product-to-order-repository";
-import { ProductCategoriesRepository } from "./product-categories-repository";
 
 
 // const admin = new AdminRepository();
@@ -21,7 +20,6 @@ const category = new CategoryRepository()
 const product = new ProductRepository()
 const order = new OrderRepository()
 const productToOrder = new ProductToOrderRepository();
-const productCategories = new ProductCategoriesRepository()
 
 const repositories = {
   user,
@@ -29,7 +27,6 @@ const repositories = {
   product,
   order,
   productToOrder,
-  productCategories
 };
 
 type Repositories = typeof repositories;

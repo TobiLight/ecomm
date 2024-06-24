@@ -18,10 +18,10 @@
 </script>
 
 <div class="w-full pt-16 pb-24 lg:px-0 px-5">
-  <div class="max-w-screen-lg text-white mx-auto pb-10">
+  <div class="max-w-screen-lg dark:text-white mx-auto pb-10">
     <a
       href="/"
-      class="flex items-center rounded bg-white dark:bg-transparent border dark:border-primary-800 p-2 w-fit"
+      class="flex items-center rounded bg-white border-primary-800 dark:bg-transparent border dark:border-primary-800 p-2 w-fit"
     >
       <BackIcon class="w-8 h-8" />
       back

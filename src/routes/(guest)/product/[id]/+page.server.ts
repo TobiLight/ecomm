@@ -42,8 +42,6 @@ export const actions = {
 
     // form.data.productID = id;
 
-    console.log(form.data.quantity)
-
     if (!form.valid) {
       return fail(400, { form });
     }
