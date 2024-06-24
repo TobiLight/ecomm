@@ -45,7 +45,7 @@ class CloudinaryStore {
     this.cloudinaryStore = cloudinary;
   }
 
-  async upload(file: File | Sharp, name: string, folder: string) {
+  async upload(file: File | Sharp, name: string, folder: string): Promise<UploadApiResponse | undefined> {
     let ret: string | undefined;
 
     if (file instanceof File) {
@@ -90,7 +90,7 @@ class CloudinaryStore {
     // return x;
   }
 
-  async destroy(publicID: string) {
+  async destroy(publicID: string): Promise<any> {
     try {
       let req = await this.cloudinaryStore.uploader.destroy(publicID);
 
