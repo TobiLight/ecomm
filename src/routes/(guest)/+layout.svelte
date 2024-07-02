@@ -4,23 +4,31 @@
   import Navbar from './components/Navbar.svelte';
   import type { PageData } from './$types';
   import UpArrow from '$lib/components/Icons/UpArrow.svelte';
+  import { onMount } from 'svelte';
 
   export let data: PageData;
 
-  let scrollToTop = document.getElementById('scroll-to-top') || null;
+  let scrollToTop: HTMLElement | null;
 
-  window.addEventListener('scroll', function () {
-    // Get the current scroll position from the top
-    const scrollY = window.scrollY;
+  onMount(() => {
+    scrollToTop = document.getElementById('scroll-to-top');
 
-    // Set a threshold to determine when to show the button (e.g., 100px)
-    const threshold = 100;
+    window.addEventListener('scroll', function () {
+      // Get the current scroll position from the top
+      const scrollY = window.scrollY;
 
-    if (scrollY > threshold && scrollToTop !== null) {
-      scrollToTop.style.opacity = '1'; // Show the button
-    } else {
-      if (scrollToTop !== null) scrollToTop.style.opacity = '1'; // Hide the button
-    }
+      // Set a threshold to determine when to show the button (e.g., 100px)
+      const threshold = 100;
+
+      console.log(threshold, scrollY)
+
+      if (scrollY > threshold && scrollToTop !== null) {
+        scrollToTop.style.opacity = '1'; // Show the button
+      } else {
+        if (scrollToTop !== null) scrollToTop.style.opacity = '1'; // Hide the button
+      }
+    });
+    return () => {};
   });
 
   $: user = data.currentUser;
