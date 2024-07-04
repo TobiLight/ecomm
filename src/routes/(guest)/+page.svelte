@@ -143,6 +143,6 @@
   <title>{getTitle()}</title>
   <meta
     name="description"
-    content="Unleash the shopping bliss! SvelteKit-powered eCommerce for fast, secure, and delightful retail therapy. Discover now!"
+    content="Unleash the shopping bliss! Fast, secure, and delightful retail therapy. Discover now!"
   />
 </svelte:head>

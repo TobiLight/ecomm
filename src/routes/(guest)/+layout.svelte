@@ -44,7 +44,7 @@
   </div>
   <button
     id="scroll-to-top"
-    class="fixed w-14 h-14 drop-shadow-2xl hover:-translate-y-2 transition-all ease-linear bg-primary-600 rounded-full right-4 bottom-4 z-[899] text-gray-200 flex items-center justify-center"
+    class="fixed w-14 h-14 drop-shadow-2xl hover:-translate-y-2 transition-all duration-[1500] ease-in bg-primary-600 rounded-full right-4 bottom-4 z-[899] text-gray-200 flex items-center justify-center"
     on:click={() => {
       // const scrollToTop = () => {
       //   const c = document.documentElement.scrollTop || document.body.scrollTop;
