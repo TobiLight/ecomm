@@ -33,13 +33,7 @@
     </div>
   {:else}
     <form
-      id="Form"
-      use:enh={({}) => {
-        isPlacingOrder = true;
-        return () => {
-          isPlacingOrder = false;
-        };
-      }}
+      use:enhance
       method="post"
       action="/product/?/updateAndCheckout"
       class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-5 xl:px-0 px-5"
@@ -90,7 +84,7 @@
                     <input
                       type="number"
                       name="quantity"
-                      disabled={isDeleting || isPlacingOrder}
+                      disabled={isDeleting || $submitting}
                       bind:value={$form.quantity[index]}
                       class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                       placeholder="1"
@@ -121,7 +115,7 @@
                   >
                     <button
                       name="productID"
-                      disabled={isDeleting || isPlacingOrder}
+                      disabled={isDeleting || $submitting}
                       value={product.id}
                       type="submit"
                       form="Form1"
@@ -149,10 +143,9 @@
 
         <button
           type="submit"
-          id="Form"
-          disabled={isDeleting || isPlacingOrder}
+          disabled={isDeleting || $submitting}
           class="text-white bg-secondary-600 hover:bg-secondary-700 focus:ring-4 focus:outline-none focus:ring-secondary-200 dark:focus:ring-secondary-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
-          >{isPlacingOrder ? 'Please wait...' : 'Place order'}</button
+          >{$submitting ? 'Please wait...' : 'Place order'}</button
         >
       </div>
     </form>
